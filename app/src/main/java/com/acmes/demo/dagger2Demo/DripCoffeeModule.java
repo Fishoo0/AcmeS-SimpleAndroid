@@ -1,4 +1,4 @@
-package com.acmes.simpleandroid.dagger2Demo;
+package com.acmes.demo.dagger2Demo;
 
 import dagger.Module;
 import dagger.Provides;

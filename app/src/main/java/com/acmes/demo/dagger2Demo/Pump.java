@@ -1,4 +1,4 @@
-package com.acmes.simpleandroid.dagger2Demo;
+package com.acmes.demo.dagger2Demo;
 
 /**
  * Created by fishyu on 2017/8/25.

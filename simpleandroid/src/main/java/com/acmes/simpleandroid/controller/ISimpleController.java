@@ -1,4 +1,4 @@
-package com.acmes.simplemvc.controller;
+package com.acmes.simpleandroid.controller;
 
 import android.os.Handler;
 
