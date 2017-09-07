@@ -1,6 +1,6 @@
 # Goals
 
-    Simple & Fast
+    Simple & Fast in 2017
 
 
 
@@ -10,5 +10,11 @@ Dagger2
 Retrofit
 RxJava/RxAndroid
 ButterKnife
+
+
+     not very good pattern practice !!!
+
+
+
 
 
