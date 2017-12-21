@@ -1,12 +1,11 @@
-package com.acmes.simpleandroid.model.Retrofit;
+package com.acmes.simpleandroid.imp.Square;
 
 import android.util.Log;
 
-import com.acmes.simpleandroid.ISimpleModeCallback;
-import com.acmes.simpleandroid.SimpleApplication;
-import com.acmes.simpleandroid.model.SimpleModel;
-import com.acmes.simpleandroid.model.SimpleRequest;
-import com.acmes.simpleandroid.model.SimpleResponse;
+import com.acmes.simpleandroid.mvc.ISimpleModeCallback;
+import com.acmes.simpleandroid.mvc.model.SimpleModel;
+import com.acmes.simpleandroid.mvc.model.SimpleRequest;
+import com.acmes.simpleandroid.mvc.model.SimpleResponse;
 
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -23,11 +22,11 @@ public class RetrofitSimpleModel<API> extends SimpleModel {
 
     protected final String TAG = getClass().getSimpleName();
 
-    public RetrofitSimpleModel(Class<API> clz) {
+    public RetrofitSimpleModel(Retrofit retrofit, Class<API> clz) {
         super();
-        Retrofit retrofit = SimpleApplication.getSimpleApplicationInstance().getRetrofit();
         mAPI = retrofit.create(clz);
     }
+
 
     @Override
     protected void onCancelRequest(Object request, Object callable) {

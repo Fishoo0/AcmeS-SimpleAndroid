@@ -8,9 +8,9 @@ import android.widget.TextView;
 
 import com.acmes.demo.simpleandroid.AcmeSAPI;
 import com.acmes.demo.simpleandroid.DAcmeS;
-import com.acmes.simpleandroid.SimpleActivity;
-import com.acmes.simpleandroid.model.Retrofit.RetrofitSimpleModel;
-import com.acmes.simpleandroid.model.SimpleResponse;
+import com.acmes.simpleandroid.imp.Square.RetrofitSimpleModel;
+import com.acmes.simpleandroid.mvc.SimpleActivity;
+import com.acmes.simpleandroid.mvc.model.SimpleResponse;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -20,7 +20,6 @@ import butterknife.OnClick;
  */
 
 public class MainActivity3 extends SimpleActivity<RetrofitSimpleModel<AcmeSAPI>> implements View.OnClickListener {
-
 
     @Override
     public void onRequestStart(Object requestTag) {
@@ -36,11 +35,12 @@ public class MainActivity3 extends SimpleActivity<RetrofitSimpleModel<AcmeSAPI>>
 
     @Override
     public void onFailure(Object requestTag, Throwable exception) {
+
     }
 
     @Override
     protected RetrofitSimpleModel<AcmeSAPI> createMode() {
-        return new RetrofitSimpleModel<>(AcmeSAPI.class);
+        return new RetrofitSimpleModel<>(DemoApplication.getInstance().getRetrofit(), AcmeSAPI.class);
     }
 
     @BindView(R.id.textview)
@@ -65,7 +65,6 @@ public class MainActivity3 extends SimpleActivity<RetrofitSimpleModel<AcmeSAPI>>
 
     void updateView(DAcmeS data) {
         Log.v(TAG, "updateView");
-
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append(data.name);
         stringBuilder.append("\n\n");
@@ -81,7 +80,7 @@ public class MainActivity3 extends SimpleActivity<RetrofitSimpleModel<AcmeSAPI>>
 
         mTextView.setText(stringBuilder.toString());
 
-        getPicasso()
+        DemoApplication.getInstance().getPicasso()
                 .load(data.logo)
                 .fit()
                 .centerCrop()

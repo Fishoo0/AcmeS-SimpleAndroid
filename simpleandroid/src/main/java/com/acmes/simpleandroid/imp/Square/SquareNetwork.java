@@ -1,4 +1,4 @@
-package com.acmes.simpleandroid.model.Square;
+package com.acmes.simpleandroid.imp.Square;
 
 import android.app.Application;
 import android.util.Log;
@@ -60,7 +60,6 @@ public class SquareNetwork {
                 .build();
         return mOkHttpClient;
     }
-
 
     public HttpLoggingInterceptor getHttpLoggingInterceptor() {
         return mHttpLoggingInterceptor;

@@ -7,8 +7,7 @@
         android:id="@+id/imageview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:scaleType="fitXY"
-        />
+        android:scaleType="fitXY" />
 
     <TextView
         android:id="@+id/textview"
@@ -18,6 +17,5 @@
         android:layout_marginTop="20dp"
         android:onClick="onClick"
         android:text="Hello World!" />
-
 
 </RelativeLayout>

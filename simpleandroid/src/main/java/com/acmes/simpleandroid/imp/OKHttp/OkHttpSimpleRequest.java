@@ -1,6 +1,6 @@
-package com.acmes.simpleandroid.model.OKHttp;
+package com.acmes.simpleandroid.imp.OKHttp;
 
-import com.acmes.simpleandroid.model.SimpleRequest;
+import com.acmes.simpleandroid.mvc.model.SimpleRequest;
 
 /**
  * Created by fishyu on 2017/9/7.

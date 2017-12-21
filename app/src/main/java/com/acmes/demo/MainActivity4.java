@@ -8,9 +8,9 @@ import android.widget.TextView;
 
 import com.acmes.demo.simpleandroid.AcmeSAPI;
 import com.acmes.demo.simpleandroid.DAcmeS;
-import com.acmes.simpleandroid.SimpleActivity;
-import com.acmes.simpleandroid.model.Retrofit.RetrofitSimpleModel;
-import com.acmes.simpleandroid.model.SimpleResponse;
+import com.acmes.simpleandroid.mvc.SimpleActivity;
+import com.acmes.simpleandroid.imp.Square.RetrofitSimpleModel;
+import com.acmes.simpleandroid.mvc.model.SimpleResponse;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -19,7 +19,7 @@ import butterknife.OnClick;
  * Created by fishyu on 2017/9/7.
  */
 
-public class MainActivity4 extends SimpleActivity<RetrofitSimpleModel<AcmeSAPI>> implements View.OnClickListener{
+public class MainActivity4 extends SimpleActivity<RetrofitSimpleModel<AcmeSAPI>> implements View.OnClickListener {
 
 
     @Override
@@ -31,7 +31,7 @@ public class MainActivity4 extends SimpleActivity<RetrofitSimpleModel<AcmeSAPI>>
     public void onResponse(Object requestTag, SimpleResponse response) {
 
 
-        if(response.isSuccess()) {
+        if (response.isSuccess()) {
             updateView((DAcmeS) response);
         }
 
@@ -44,7 +44,7 @@ public class MainActivity4 extends SimpleActivity<RetrofitSimpleModel<AcmeSAPI>>
 
     @Override
     protected RetrofitSimpleModel createMode() {
-        return new RetrofitSimpleModel(AcmeSAPI.class);
+        return new RetrofitSimpleModel(DemoApplication.getInstance().getRetrofit(), AcmeSAPI.class);
     }
 
 
@@ -61,13 +61,12 @@ public class MainActivity4 extends SimpleActivity<RetrofitSimpleModel<AcmeSAPI>>
     }
 
 
-
     @OnClick(R.id.textview)
     @Override
     public void onClick(final View view) {
 
 
-        getModel().performRequestRetrofit(null,DAcmeS.class,getModel().getAPI().acmesRxObservable());
+        getModel().performRequestRetrofit(null, DAcmeS.class, getModel().getAPI().acmesRxObservable());
 
     }
 
@@ -90,7 +89,7 @@ public class MainActivity4 extends SimpleActivity<RetrofitSimpleModel<AcmeSAPI>>
 
         mTextView.setText(stringBuilder.toString());
 
-        getPicasso()
+        DemoApplication.getInstance().getPicasso()
                 .load(data.logo)
                 .fit()
                 .centerCrop()

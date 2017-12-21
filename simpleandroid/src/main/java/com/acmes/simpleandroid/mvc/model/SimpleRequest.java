@@ -1,4 +1,4 @@
-package com.acmes.simpleandroid.model;
+package com.acmes.simpleandroid.mvc.model;
 
 /**
  * Created by fishyu on 2017/8/23.

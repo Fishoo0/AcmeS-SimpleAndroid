@@ -1,6 +1,6 @@
 package com.acmes.demo.simpleandroid;
 
-import com.acmes.simpleandroid.model.SimpleResponse;
+import com.acmes.simpleandroid.mvc.model.SimpleResponse;
 
 /**
  * Created by fishyu on 2017/9/5.

@@ -1,6 +1,6 @@
-package com.acmes.simpleandroid.model;
+package com.acmes.simpleandroid.mvc.model;
 
-import com.acmes.simpleandroid.ISimpleModeCallback;
+import com.acmes.simpleandroid.mvc.ISimpleModeCallback;
 
 import java.util.Iterator;
 import java.util.LinkedHashMap;
