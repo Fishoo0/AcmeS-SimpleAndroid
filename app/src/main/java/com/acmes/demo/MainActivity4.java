@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.acmes.ethome.R;
 import com.acmes.demo.simpleandroid.AcmeSAPI;
 import com.acmes.demo.simpleandroid.DAcmeS;
 import com.acmes.simpleandroid.mvc.SimpleActivity;

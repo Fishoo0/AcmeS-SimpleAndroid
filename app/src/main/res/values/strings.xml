@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">SimpleAndroid</string>
+    <string name="value_splash_version">Version %s \n CopyRight @AcmeS Baby Series </string>
 </resources>

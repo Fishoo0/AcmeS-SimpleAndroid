@@ -31,6 +31,7 @@ public abstract class SimpleActivity<T extends SimpleModel> extends FragmentActi
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Log.v(TAG, "onCreate");
+        ButterKnife.bind(this);
         mController = new SimpleController(this) {
             @Override
             public SimpleModel createModel() {
