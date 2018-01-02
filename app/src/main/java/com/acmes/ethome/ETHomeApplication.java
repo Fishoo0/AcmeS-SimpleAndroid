@@ -4,6 +4,7 @@ import com.acmes.simpleandroid.imp.Square.SquareNetwork;
 import com.acmes.simpleandroid.mvc.SimpleApplication;
 import com.squareup.picasso.Picasso;
 
+import hugo.weaving.DebugLog;
 import retrofit2.Retrofit;
 
 /**
@@ -16,10 +17,27 @@ public class ETHomeApplication extends SimpleApplication {
         return (ETHomeApplication) SimpleApplication.getInstance();
     }
 
+    @DebugLog
     @Override
     public void onCreate() {
         super.onCreate();
+    }
+
+    @Override
+    protected void onInitialize() {
+        super.onInitialize();
         mSquareNetwork = new SquareNetwork(this, getBaseUrl());
+        updateProgress(20);
+        while (getInitializeProgress() < 100) {
+            try {
+                Thread.sleep((long) (Math.random() * 200));
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            updateProgress(getInitializeProgress() + 1);
+        }
+
+
     }
 
     protected String getBaseUrl() {
@@ -35,4 +53,6 @@ public class ETHomeApplication extends SimpleApplication {
     public Retrofit getRetrofit() {
         return mSquareNetwork.getRetrofit();
     }
+
+
 }
