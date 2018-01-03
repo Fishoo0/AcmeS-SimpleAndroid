@@ -19,4 +19,8 @@ public class DUser implements Serializable {
     @SerializedName("user_password")
     public String mUserPassword;
 
+    public DUser(String user_name, String user_password) {
+        mUserName = user_name;
+        mUserPassword = user_password;
+    }
 }

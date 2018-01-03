@@ -9,10 +9,10 @@ import com.acmes.simpleandroid.mvc.model.SimpleResponse;
 
 public interface ISimpleModeCallback {
 
-    void onRequestStart(SimpleRequest requestTag);
+    void onRequestStart(SimpleRequest request);
 
-    void onResponse(SimpleRequest requestTag, SimpleResponse response);
+    void onResponse(SimpleRequest request, SimpleResponse response);
 
-    void onFailure(SimpleRequest requestTag, Throwable exception);
+    void onFailure(SimpleRequest request, Throwable exception);
 
 }

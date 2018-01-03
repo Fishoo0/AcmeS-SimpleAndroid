@@ -73,9 +73,9 @@ public abstract class SimpleModel implements ISimpleModeCallback {
     /**
      * Cancel requests
      *
-     * @param requestTag
+     * @param request
      */
-    public void cancelRequest(Object requestTag) {
+    public void cancelRequest(Object request) {
     }
 
 
@@ -98,42 +98,42 @@ public abstract class SimpleModel implements ISimpleModeCallback {
     }
 
 
-    public void onRequestStart(SimpleRequest requestTag, Object callable, ISimpleModeCallback callback) {
-        if (getRequestsQueen().containsKey(requestTag)) {
-            onCancelRequest(requestTag, getRequestsQueen().get(requestTag));
+    public void onRequestStart(SimpleRequest request, Object callable, ISimpleModeCallback callback) {
+        if (getRequestsQueen().containsKey(request)) {
+            onCancelRequest(request, getRequestsQueen().get(request));
         }
-        mRequests.put(requestTag, callable);
-        callback.onRequestStart(requestTag);
+        mRequests.put(request, callable);
+        callback.onRequestStart(request);
     }
 
-    public void onResponse(SimpleRequest requestTag, SimpleResponse response, ISimpleModeCallback callback) {
-        mRequests.remove(requestTag);
-        callback.onResponse(requestTag, response);
+    public void onResponse(SimpleRequest request, SimpleResponse response, ISimpleModeCallback callback) {
+        mRequests.remove(request);
+        callback.onResponse(request, response);
     }
 
-    public void onFailure(SimpleRequest requestTag, Throwable exception, ISimpleModeCallback callback) {
-        mRequests.remove(requestTag);
-        callback.onFailure(requestTag, exception);
+    public void onFailure(SimpleRequest request, Throwable exception, ISimpleModeCallback callback) {
+        mRequests.remove(request);
+        callback.onFailure(request, exception);
     }
 
     @Override
-    public void onRequestStart(SimpleRequest requestTag) {
+    public void onRequestStart(SimpleRequest request) {
         for (ISimpleModeCallback callback : mSimpleCallbacks) {
-            callback.onRequestStart(requestTag);
-        }
-    }
-
-    @Override
-    public void onResponse(SimpleRequest requestTag, SimpleResponse response) {
-        for (ISimpleModeCallback callback : mSimpleCallbacks) {
-            callback.onResponse(requestTag, response);
+            callback.onRequestStart(request);
         }
     }
 
     @Override
-    public void onFailure(SimpleRequest requestTag, Throwable exception) {
+    public void onResponse(SimpleRequest request, SimpleResponse response) {
         for (ISimpleModeCallback callback : mSimpleCallbacks) {
-            callback.onFailure(requestTag, exception);
+            callback.onResponse(request, response);
+        }
+    }
+
+    @Override
+    public void onFailure(SimpleRequest request, Throwable exception) {
+        for (ISimpleModeCallback callback : mSimpleCallbacks) {
+            callback.onFailure(request, exception);
         }
     }
 

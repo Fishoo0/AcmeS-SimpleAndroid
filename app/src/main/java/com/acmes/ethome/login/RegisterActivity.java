@@ -1,6 +1,5 @@
 package com.acmes.ethome.login;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
@@ -8,7 +7,7 @@ import android.widget.EditText;
 
 import com.acmes.ethome.ETHomeActivity;
 import com.acmes.ethome.R;
-import com.acmes.ethome.mode.request.LoginRequest;
+import com.acmes.ethome.mode.bean.DUser;
 import com.acmes.ethome.mode.request.RegisterRequest;
 import com.acmes.simpleandroid.mvc.model.SimpleRequest;
 import com.acmes.simpleandroid.mvc.model.SimpleResponse;
@@ -42,40 +41,28 @@ public class RegisterActivity extends ETHomeActivity<LoginMode> implements View.
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.login_activity);
+        setContentView(R.layout.register_activity);
     }
 
 
     @Override
-    public void onRequestStart(SimpleRequest requestTag) {
-        super.onRequestStart(requestTag);
-        if (requestTag instanceof LoginRequest) {
-            mButton.setClickable(false);
-        }
-    }
-
-
-    @Override
-    public void onResponse(SimpleRequest requestTag, SimpleResponse response) {
-        super.onResponse(requestTag, response);
-        if (requestTag instanceof LoginRequest) {
-            mButton.setClickable(true);
+    public void onResponse(SimpleRequest request, SimpleResponse response) {
+        super.onResponse(request, response);
+        if (request instanceof RegisterRequest) {
             if (response.isSuccess()) {
-
+                LoginDispatcherActivity.jumpToThis(
+                        this,
+                        LoginDispatcherActivity
+                                .getJumpToThisIntent(this)
+                                .putExtra(LoginActivity.USER_NAME,
+                                        new DUser(((RegisterRequest) request).user_name, ((RegisterRequest) request).user_password))
+                );
+                finish();
             }
         }
-
         Utils.showToast(response.getMessage() + " " + response.getData());
     }
 
-
-    @Override
-    public void onFailure(SimpleRequest requestTag, Throwable exception) {
-        super.onFailure(requestTag, exception);
-        if (requestTag instanceof LoginRequest) {
-            mButton.setClickable(true);
-        }
-    }
 
     @OnClick(R.id.submit_button)
     @Override

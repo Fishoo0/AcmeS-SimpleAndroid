@@ -1,13 +1,16 @@
 package com.acmes.ethome.login;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 
 import com.acmes.ethome.ETHomeActivity;
 import com.acmes.ethome.R;
+import com.acmes.ethome.mode.bean.DUser;
 import com.acmes.ethome.mode.request.LoginRequest;
 import com.acmes.simpleandroid.mvc.model.SimpleRequest;
 import com.acmes.simpleandroid.mvc.model.SimpleResponse;
@@ -36,44 +39,64 @@ public class LoginActivity extends ETHomeActivity<LoginMode> implements View.OnC
 
 
     @BindView(R.id.submit_button)
-    View mButton;
+    Button mButton;
+
+
+    public static final String USER_NAME = "user";
+
+    public static final void jumpToThis(Context context, DUser user) {
+        Intent intent = new Intent(context, LoginActivity.class);
+        if (user != null) {
+            intent.putExtra(USER_NAME, user);
+        }
+        context.startActivity(intent);
+    }
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login_activity);
-    }
 
-
-    @Override
-    public void onRequestStart(SimpleRequest requestTag) {
-        super.onRequestStart(requestTag);
-        if ("login".equals(requestTag)) {
-            mButton.setClickable(false);
+        if (getIntent().hasExtra(USER_NAME)) {
+            DUser user = (DUser) getIntent().getSerializableExtra(USER_NAME);
+            getModel().login(new LoginRequest(user.mUserName, user.mUserPassword));
         }
     }
 
 
     @Override
-    public void onResponse(SimpleRequest requestTag, SimpleResponse response) {
-        super.onResponse(requestTag, response);
-        if ("login".equals(requestTag)) {
-            mButton.setClickable(true);
+    public void onRequestStart(SimpleRequest request) {
+        super.onRequestStart(request);
+        mButton.setText("Login ing ...");
+        mButton.setClickable(false);
+    }
+
+
+    @Override
+    public void onResponse(SimpleRequest request, SimpleResponse response) {
+        super.onResponse(request, response);
+        if (response.isSuccess()) {
+            LoginDispatcherActivity.jumpToThis(this);
+            finish();
         }
 
         Utils.showToast(response.getMessage() + " " + response.getData());
+
+        mButton.setClickable(true);
+        mButton.setText("Login");
     }
 
 
     @Override
-    public void onFailure(SimpleRequest requestTag, Throwable exception) {
-        super.onFailure(requestTag, exception);
-        if ("login".equals(requestTag)) {
-            mButton.setClickable(true);
-        }
+    public void onFailure(SimpleRequest request, Throwable exception) {
+        super.onFailure(request, exception);
+
+        mButton.setClickable(true);
+        mButton.setText("Login");
     }
 
-    @OnClick(R.id.submit_button)
+    @OnClick({R.id.submit_button, R.id.goto_register_button})
     @Override
     public void onClick(View v) {
         switch (v.getId()) {

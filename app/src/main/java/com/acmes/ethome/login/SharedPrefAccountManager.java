@@ -4,6 +4,7 @@ import android.app.Application;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.text.TextUtils;
+import android.util.Log;
 
 import com.acmes.ethome.ETHomeApplication;
 import com.acmes.ethome.mode.bean.DUser;
@@ -14,6 +15,8 @@ import com.google.gson.Gson;
  */
 
 public class SharedPrefAccountManager implements IAccountManager {
+
+    private static final String TAG = SharedPrefAccountManager.class.getSimpleName();
 
     private static SharedPrefAccountManager mInstance = new SharedPrefAccountManager(ETHomeApplication.getInstance());
 
@@ -28,8 +31,9 @@ public class SharedPrefAccountManager implements IAccountManager {
     public SharedPrefAccountManager(Application context) {
         mSharedPreferences = context.getSharedPreferences(ACCOUNT, Context.MODE_PRIVATE);
         String user = mSharedPreferences.getString(KEY_ACCOUNT, "");
+        Log.e(TAG, "user -> " + user);
         if (!TextUtils.isEmpty(user)) {
-            mCurrentUser = GSON.fromJson(user, DUser.class);
+            mCurrentUser = new Gson().fromJson(user, DUser.class);
         }
     }
 

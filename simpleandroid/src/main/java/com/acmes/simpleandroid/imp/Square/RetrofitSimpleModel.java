@@ -48,13 +48,13 @@ public class RetrofitSimpleModel<API> extends SimpleModel {
     }
 
     /**
-     * @param requestTag
+     * @param request
      * @param callback
      * @param observable
      * @param <T>
      * @return
      */
-    protected <T extends SimpleResponse> RetrofitSimpleModel performRequestRetrofit(final SimpleRequest requestTag, final ISimpleModeCallback callback, Observable<T> observable) {
+    protected <T extends SimpleResponse> RetrofitSimpleModel performRequestRetrofit(final SimpleRequest request, final ISimpleModeCallback callback, Observable<T> observable) {
         Log.v(TAG, "performRequest");
         Disposable disposable = observable.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -62,20 +62,20 @@ public class RetrofitSimpleModel<API> extends SimpleModel {
                     @Override
                     public void accept(T t) throws Exception {
                         if (t.isSuccess()) {
-                            if (requestTag.getLastResponse() != null) {
-                                t.onAppendLastResponse(requestTag.getLastResponse());
+                            if (request.getLastResponse() != null) {
+                                t.onAppendLastResponse(request.getLastResponse());
                             }
                         }
-                        RetrofitSimpleModel.this.onResponse(requestTag, t, callback);
+                        RetrofitSimpleModel.this.onResponse(request, t, callback);
                     }
                 }, new Consumer<Throwable>() {
                     @Override
                     public void accept(Throwable throwable) throws Exception {
-                        RetrofitSimpleModel.this.onFailure(requestTag, throwable, callback);
+                        RetrofitSimpleModel.this.onFailure(request, throwable, callback);
                     }
                 });
 
-        RetrofitSimpleModel.this.onRequestStart(requestTag, disposable, callback);
+        RetrofitSimpleModel.this.onRequestStart(request, disposable, callback);
         return this;
     }
 

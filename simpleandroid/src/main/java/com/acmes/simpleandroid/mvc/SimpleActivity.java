@@ -120,17 +120,17 @@ public abstract class SimpleActivity<T extends SimpleModel> extends FragmentActi
     }
 
     @Override
-    public void onRequestStart(SimpleRequest requestTag) {
+    public void onRequestStart(SimpleRequest request) {
 
     }
 
     @Override
-    public void onResponse(SimpleRequest requestTag, SimpleResponse response) {
+    public void onResponse(SimpleRequest request, SimpleResponse response) {
 
     }
 
     @Override
-    public void onFailure(SimpleRequest requestTag, Throwable exception) {
+    public void onFailure(SimpleRequest request, Throwable exception) {
 
     }
 }

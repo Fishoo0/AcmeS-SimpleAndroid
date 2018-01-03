@@ -1,5 +1,6 @@
 package com.acmes.ethome;
 
+import android.util.Log;
 import android.widget.Toast;
 
 import com.acmes.simpleandroid.mvc.SimpleActivity;
@@ -13,8 +14,9 @@ public abstract class ETHomeActivity<T extends ETHomeMode> extends SimpleActivit
 
 
     @Override
-    public void onFailure(SimpleRequest requestTag, Throwable exception) {
-        super.onFailure(requestTag, exception);
+    public void onFailure(SimpleRequest request, Throwable exception) {
+        super.onFailure(request, exception);
+        Log.e(TAG, exception.getMessage());
         Toast.makeText(this, exception.getMessage(), Toast.LENGTH_SHORT).show();
     }
 }

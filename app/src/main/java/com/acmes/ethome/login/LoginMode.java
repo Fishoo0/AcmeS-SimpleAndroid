@@ -1,6 +1,7 @@
 package com.acmes.ethome.login;
 
 import com.acmes.ethome.ETHomeMode;
+import com.acmes.ethome.mode.bean.DUser;
 import com.acmes.ethome.mode.request.LoginRequest;
 import com.acmes.ethome.mode.request.LogoutRequest;
 import com.acmes.ethome.mode.request.RegisterRequest;
@@ -14,6 +15,7 @@ import com.acmes.simpleandroid.mvc.model.SimpleResponse;
 public class LoginMode extends ETHomeMode {
 
     private static LoginMode mLoginMode = new LoginMode();
+    private IAccountManager mAccountManager = SharedPrefAccountManager.getInstance();
 
     public static LoginMode getInstance() {
         return mLoginMode;
@@ -44,15 +46,18 @@ public class LoginMode extends ETHomeMode {
 
 
     @Override
-    public void onResponse(SimpleRequest requestTag, SimpleResponse response) {
-        super.onResponse(requestTag, response);
-        if (requestTag instanceof LoginRequest) {
-
-        } else if (requestTag instanceof RegisterRequest) {
-
-        } else if (requestTag instanceof LogoutRequest) {
-
+    public void onResponse(SimpleRequest request, SimpleResponse response) {
+        if (response.isSuccess() && response.getData() != null) {
+            if (request instanceof LoginRequest && response.getData() instanceof DUser) {
+                DUser user = new DUser(((LoginRequest) request).user_name, ((LoginRequest) request).user_password);
+                mAccountManager.addUser(user);
+            } else if (request instanceof RegisterRequest && response.getData() instanceof DUser) {
+                //do nothing
+            } else if (request instanceof LogoutRequest) {
+                mAccountManager.removeUser((DUser) response.getData());
+            }
         }
+        super.onResponse(request, response);
     }
 
     @Override

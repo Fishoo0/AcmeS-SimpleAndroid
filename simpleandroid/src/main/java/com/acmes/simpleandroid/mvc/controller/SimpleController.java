@@ -40,21 +40,21 @@ public abstract class SimpleController implements ISimpleModeCallback {
 
 
     @Override
-    public void onRequestStart(SimpleRequest requestTag) {
-        Log.v(TAG, "onRequestStart -> " + requestTag);
-        mCallback.onRequestStart(requestTag);
+    public void onRequestStart(SimpleRequest request) {
+        Log.v(TAG, "onRequestStart -> " + request);
+        mCallback.onRequestStart(request);
     }
 
     @Override
-    public void onResponse(SimpleRequest requestTag, SimpleResponse response) {
-        Log.v(TAG, "onResponse -> " + requestTag);
-        mCallback.onResponse(requestTag, response);
+    public void onResponse(SimpleRequest request, SimpleResponse response) {
+        Log.v(TAG, "onResponse -> " + request);
+        mCallback.onResponse(request, response);
     }
 
     @Override
-    public void onFailure(SimpleRequest requestTag, Throwable exception) {
-        Log.v(TAG, "onFailure -> " + requestTag);
-        mCallback.onFailure(requestTag, exception);
+    public void onFailure(SimpleRequest request, Throwable exception) {
+        Log.v(TAG, "onFailure -> " + request);
+        mCallback.onFailure(request, exception);
     }
 
     public Handler getHandler() {
