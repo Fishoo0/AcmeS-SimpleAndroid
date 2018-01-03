@@ -24,26 +24,6 @@ public class MainActivity4 extends SimpleActivity<RetrofitSimpleModel<AcmeSAPI>>
 
 
     @Override
-    public void onRequestStart(Object requestTag) {
-
-    }
-
-    @Override
-    public void onResponse(Object requestTag, SimpleResponse response) {
-
-
-        if (response.isSuccess()) {
-            updateView((DAcmeS) response);
-        }
-
-    }
-
-    @Override
-    public void onFailure(Object requestTag, Throwable exception) {
-
-    }
-
-    @Override
     protected RetrofitSimpleModel createMode() {
         return new RetrofitSimpleModel(DemoApplication.getInstance().getRetrofit(), AcmeSAPI.class);
     }
@@ -67,7 +47,7 @@ public class MainActivity4 extends SimpleActivity<RetrofitSimpleModel<AcmeSAPI>>
     public void onClick(final View view) {
 
 
-        getModel().performRequestRetrofit(null, DAcmeS.class, getModel().getAPI().acmesRxObservable());
+//        getModel().performRequestRetrofit(null, null, getModel().getAPI().acmesRxObservable());
 
     }
 

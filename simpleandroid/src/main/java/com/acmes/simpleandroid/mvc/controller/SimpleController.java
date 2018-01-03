@@ -10,6 +10,7 @@ import com.acmes.simpleandroid.mvc.ISimpleModeCallback;
 import com.acmes.simpleandroid.mvc.SimpleActivity;
 import com.acmes.simpleandroid.mvc.SimpleFragment;
 import com.acmes.simpleandroid.mvc.model.SimpleModel;
+import com.acmes.simpleandroid.mvc.model.SimpleRequest;
 import com.acmes.simpleandroid.mvc.model.SimpleResponse;
 
 /**
@@ -39,19 +40,19 @@ public abstract class SimpleController implements ISimpleModeCallback {
 
 
     @Override
-    public void onRequestStart(Object requestTag) {
+    public void onRequestStart(SimpleRequest requestTag) {
         Log.v(TAG, "onRequestStart -> " + requestTag);
         mCallback.onRequestStart(requestTag);
     }
 
     @Override
-    public void onResponse(Object requestTag, SimpleResponse response) {
+    public void onResponse(SimpleRequest requestTag, SimpleResponse response) {
         Log.v(TAG, "onResponse -> " + requestTag);
         mCallback.onResponse(requestTag, response);
     }
 
     @Override
-    public void onFailure(Object requestTag, Throwable exception) {
+    public void onFailure(SimpleRequest requestTag, Throwable exception) {
         Log.v(TAG, "onFailure -> " + requestTag);
         mCallback.onFailure(requestTag, exception);
     }
@@ -68,7 +69,7 @@ public abstract class SimpleController implements ISimpleModeCallback {
         if (mModel == null) {
             mModel = createModel();
             if (mModel != null) {
-                mModel.setSimpleCallback(this);
+                mModel.addSimpleCallback(this);
             }
         }
         return mModel;

@@ -22,11 +22,16 @@ public class RetrofitSimpleModel<API> extends SimpleModel {
 
     protected final String TAG = getClass().getSimpleName();
 
+    protected API mAPI;
+
+    public API getAPI() {
+        return mAPI;
+    }
+
     public RetrofitSimpleModel(Retrofit retrofit, Class<API> clz) {
         super();
         mAPI = retrofit.create(clz);
     }
-
 
     @Override
     protected void onCancelRequest(Object request, Object callable) {
@@ -34,25 +39,13 @@ public class RetrofitSimpleModel<API> extends SimpleModel {
         disposable.dispose();
     }
 
-
-    @Deprecated
     @Override
     public void performRequest(SimpleRequest request, ISimpleModeCallback callback) {
-        throw new RuntimeException("Retrofit not support such method ,calling #performRequestRetrofit instead ");
+        if (!(request instanceof RetrofitSimpleRequest)) {
+            throw new IllegalArgumentException("Request must be instance of RetrofitSimpleRequest");
+        }
+        performRequestRetrofit(request, callback, ((RetrofitSimpleRequest) request).callAPI(getAPI()));
     }
-
-
-    protected API mAPI;
-
-    public API getAPI() {
-        return mAPI;
-    }
-
-
-    public <T extends SimpleResponse> RetrofitSimpleModel performRequestRetrofit(final T lastResponse, final Object requestTag, Observable<T> observable) {
-        return performRequestRetrofit(lastResponse, requestTag, mSimpleCallback, observable);
-    }
-
 
     /**
      * @param requestTag
@@ -61,7 +54,7 @@ public class RetrofitSimpleModel<API> extends SimpleModel {
      * @param <T>
      * @return
      */
-    public <T extends SimpleResponse> RetrofitSimpleModel performRequestRetrofit(final T lastResponse, final Object requestTag, final ISimpleModeCallback callback, Observable<T> observable) {
+    protected <T extends SimpleResponse> RetrofitSimpleModel performRequestRetrofit(final SimpleRequest requestTag, final ISimpleModeCallback callback, Observable<T> observable) {
         Log.v(TAG, "performRequest");
         Disposable disposable = observable.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -69,8 +62,8 @@ public class RetrofitSimpleModel<API> extends SimpleModel {
                     @Override
                     public void accept(T t) throws Exception {
                         if (t.isSuccess()) {
-                            if (lastResponse != null) {
-                                t.onAppendLastResponse(lastResponse);
+                            if (requestTag.getLastResponse() != null) {
+                                t.onAppendLastResponse(requestTag.getLastResponse());
                             }
                         }
                         RetrofitSimpleModel.this.onResponse(requestTag, t, callback);
@@ -85,6 +78,5 @@ public class RetrofitSimpleModel<API> extends SimpleModel {
         RetrofitSimpleModel.this.onRequestStart(requestTag, disposable, callback);
         return this;
     }
-
 
 }

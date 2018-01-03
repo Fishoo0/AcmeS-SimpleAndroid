@@ -1,12 +1,12 @@
 package com.acmes.ethome.mode.response;
 
-import com.acmes.simpleandroid.mvc.model.SimpleResponse;
+import com.acmes.simpleandroid.imp.Square.RetrofitSimpleResponse;
 
 /**
  * Created by fishyu on 2018/1/2.
  */
 
-public class ETHomeResponse<T> extends SimpleResponse {
+public class ETHomeResponse<T> extends RetrofitSimpleResponse {
 
     public int code;
     public String message;

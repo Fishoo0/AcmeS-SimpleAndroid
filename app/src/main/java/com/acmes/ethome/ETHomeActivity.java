@@ -3,6 +3,7 @@ package com.acmes.ethome;
 import android.widget.Toast;
 
 import com.acmes.simpleandroid.mvc.SimpleActivity;
+import com.acmes.simpleandroid.mvc.model.SimpleRequest;
 
 /**
  * Created by fishyu on 2018/1/2.
@@ -12,9 +13,9 @@ public abstract class ETHomeActivity<T extends ETHomeMode> extends SimpleActivit
 
 
     @Override
-    public void onFailure(Object requestTag, Throwable exception) {
+    public void onFailure(SimpleRequest requestTag, Throwable exception) {
         super.onFailure(requestTag, exception);
-        Toast.makeText(this, R.string.value_common_net_error, Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, exception.getMessage(), Toast.LENGTH_SHORT).show();
     }
 }
 

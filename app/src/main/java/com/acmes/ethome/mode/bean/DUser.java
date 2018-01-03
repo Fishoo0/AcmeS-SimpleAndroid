@@ -1,5 +1,7 @@
 package com.acmes.ethome.mode.bean;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.io.Serializable;
 
 /**
@@ -8,8 +10,13 @@ import java.io.Serializable;
 
 public class DUser implements Serializable {
 
+    @SerializedName("user_id")
     public String mUserId;
+
+    @SerializedName("user_name")
     public String mUserName;
 
+    @SerializedName("user_password")
+    public String mUserPassword;
 
 }

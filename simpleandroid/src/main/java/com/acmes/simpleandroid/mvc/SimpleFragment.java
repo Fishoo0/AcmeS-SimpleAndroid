@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 
 import com.acmes.simpleandroid.mvc.controller.SimpleController;
 import com.acmes.simpleandroid.mvc.model.SimpleModel;
+import com.acmes.simpleandroid.mvc.model.SimpleRequest;
 import com.acmes.simpleandroid.mvc.model.SimpleResponse;
 
 /**
@@ -92,17 +93,17 @@ public abstract class SimpleFragment<T extends SimpleModel> extends Fragment imp
     protected abstract T createMode();
 
     @Override
-    public void onRequestStart(Object requestTag) {
+    public void onRequestStart(SimpleRequest requestTag) {
 
     }
 
     @Override
-    public void onResponse(Object requestTag, SimpleResponse response) {
+    public void onResponse(SimpleRequest requestTag, SimpleResponse response) {
 
     }
 
     @Override
-    public void onFailure(Object requestTag, Throwable exception) {
+    public void onFailure(SimpleRequest requestTag, Throwable exception) {
 
     }
 

@@ -31,16 +31,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:text="Login"
-        android:textColor="#999999"
-        android:textSize="14sp" />
-
-    <Button
-        android:id="@+id/goto_register_button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:text="Register Now"
+        android:text="Register"
         android:textColor="#999999"
         android:textSize="14sp" />
 

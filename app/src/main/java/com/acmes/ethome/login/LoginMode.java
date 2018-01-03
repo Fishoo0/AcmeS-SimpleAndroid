@@ -1,9 +1,11 @@
 package com.acmes.ethome.login;
 
-import android.os.Bundle;
-
 import com.acmes.ethome.ETHomeMode;
 import com.acmes.ethome.mode.request.LoginRequest;
+import com.acmes.ethome.mode.request.LogoutRequest;
+import com.acmes.ethome.mode.request.RegisterRequest;
+import com.acmes.simpleandroid.mvc.model.SimpleRequest;
+import com.acmes.simpleandroid.mvc.model.SimpleResponse;
 
 /**
  * Created by fishyu on 2018/1/2.
@@ -17,14 +19,19 @@ public class LoginMode extends ETHomeMode {
         return mLoginMode;
     }
 
-
     /**
      * Login
      */
     public void login(LoginRequest loginRequest) {
-        performRequestRetrofit(null, loginRequest, getAPI().login(loginRequest));
+        performRequest(loginRequest);
     }
 
+    /**
+     * Register
+     */
+    public void register(RegisterRequest request) {
+        performRequest(request);
+    }
 
     /**
      * Logout
@@ -36,15 +43,20 @@ public class LoginMode extends ETHomeMode {
     }
 
 
-    /**
-     * Register
-     *
-     * @param userName
-     * @param userPassword
-     * @param extras
-     */
-    public void register(String userName, String userPassword, Bundle extras) {
+    @Override
+    public void onResponse(SimpleRequest requestTag, SimpleResponse response) {
+        super.onResponse(requestTag, response);
+        if (requestTag instanceof LoginRequest) {
 
+        } else if (requestTag instanceof RegisterRequest) {
+
+        } else if (requestTag instanceof LogoutRequest) {
+
+        }
     }
 
+    @Override
+    public void onDestroy() {
+        //single instance ,we do nothing since this method would
+    }
 }

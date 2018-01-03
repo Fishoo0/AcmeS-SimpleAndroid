@@ -7,6 +7,7 @@ import android.view.View;
 
 import com.acmes.simpleandroid.mvc.SimpleActivity;
 import com.acmes.simpleandroid.mvc.model.SimpleModel;
+import com.acmes.simpleandroid.mvc.model.SimpleRequest;
 import com.acmes.simpleandroid.mvc.model.SimpleResponse;
 import com.acmes.simpleandroid.view.TriangleView;
 
@@ -40,17 +41,17 @@ public class MainActivity5 extends SimpleActivity {
     }
 
     @Override
-    public void onRequestStart(Object requestTag) {
+    public void onRequestStart(SimpleRequest requestTag) {
 
     }
 
     @Override
-    public void onResponse(Object requestTag, SimpleResponse response) {
+    public void onResponse(SimpleRequest requestTag, SimpleResponse response) {
 
     }
 
     @Override
-    public void onFailure(Object requestTag, Throwable exception) {
+    public void onFailure(SimpleRequest requestTag, Throwable exception) {
 
     }
 }

@@ -22,26 +22,10 @@ import butterknife.OnClick;
 
 public class MainActivity3 extends SimpleActivity<RetrofitSimpleModel<AcmeSAPI>> implements View.OnClickListener {
 
-    @Override
-    public void onRequestStart(Object requestTag) {
-
-    }
-
-    @Override
-    public void onResponse(Object requestTag, SimpleResponse response) {
-        if (response.isSuccess()) {
-            updateView((DAcmeS) response);
-        }
-    }
-
-    @Override
-    public void onFailure(Object requestTag, Throwable exception) {
-
-    }
 
     @Override
     protected RetrofitSimpleModel<AcmeSAPI> createMode() {
-        return new RetrofitSimpleModel<>(DemoApplication.getInstance().getRetrofit(), AcmeSAPI.class);
+        return new RetrofitSimpleModel(DemoApplication.getInstance().getRetrofit(), AcmeSAPI.class);
     }
 
     @BindView(R.id.textview)
@@ -60,7 +44,7 @@ public class MainActivity3 extends SimpleActivity<RetrofitSimpleModel<AcmeSAPI>>
     @OnClick(R.id.textview)
     @Override
     public void onClick(final View view) {
-        getModel().performRequestRetrofit(null, DAcmeS.class, getModel().getAPI().acmesRxObservable());
+//        getModel().performRequestRetrofit(null, getModel().getAPI().acmesRxObservable());
     }
 
 

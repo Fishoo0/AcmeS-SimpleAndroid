@@ -1,5 +1,6 @@
 package com.acmes.ethome.login;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
@@ -8,6 +9,7 @@ import android.widget.EditText;
 import com.acmes.ethome.ETHomeActivity;
 import com.acmes.ethome.R;
 import com.acmes.ethome.mode.request.LoginRequest;
+import com.acmes.simpleandroid.mvc.model.SimpleRequest;
 import com.acmes.simpleandroid.mvc.model.SimpleResponse;
 import com.acmes.simpleandroid.utils.Utils;
 
@@ -22,7 +24,7 @@ public class LoginActivity extends ETHomeActivity<LoginMode> implements View.OnC
 
     @Override
     protected LoginMode createMode() {
-        return LoginMode.getInstance();
+        return new LoginMode();
     }
 
     @BindView(R.id.user_name)
@@ -44,7 +46,7 @@ public class LoginActivity extends ETHomeActivity<LoginMode> implements View.OnC
 
 
     @Override
-    public void onRequestStart(Object requestTag) {
+    public void onRequestStart(SimpleRequest requestTag) {
         super.onRequestStart(requestTag);
         if ("login".equals(requestTag)) {
             mButton.setClickable(false);
@@ -53,7 +55,7 @@ public class LoginActivity extends ETHomeActivity<LoginMode> implements View.OnC
 
 
     @Override
-    public void onResponse(Object requestTag, SimpleResponse response) {
+    public void onResponse(SimpleRequest requestTag, SimpleResponse response) {
         super.onResponse(requestTag, response);
         if ("login".equals(requestTag)) {
             mButton.setClickable(true);
@@ -64,7 +66,7 @@ public class LoginActivity extends ETHomeActivity<LoginMode> implements View.OnC
 
 
     @Override
-    public void onFailure(Object requestTag, Throwable exception) {
+    public void onFailure(SimpleRequest requestTag, Throwable exception) {
         super.onFailure(requestTag, exception);
         if ("login".equals(requestTag)) {
             mButton.setClickable(true);
@@ -77,6 +79,11 @@ public class LoginActivity extends ETHomeActivity<LoginMode> implements View.OnC
         switch (v.getId()) {
             case R.id.submit_button:
                 getModel().login(new LoginRequest(mUserName.getText().toString(), mUserPassword.getText().toString()));
+                break;
+
+            case R.id.goto_register_button:
+                startActivity(new Intent(this, RegisterActivity.class));
+                finish();
                 break;
         }
     }

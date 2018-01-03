@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 
 import com.acmes.simpleandroid.mvc.controller.SimpleController;
 import com.acmes.simpleandroid.mvc.model.SimpleModel;
+import com.acmes.simpleandroid.mvc.model.SimpleRequest;
 import com.acmes.simpleandroid.mvc.model.SimpleResponse;
 
 import butterknife.ButterKnife;
@@ -119,17 +120,17 @@ public abstract class SimpleActivity<T extends SimpleModel> extends FragmentActi
     }
 
     @Override
-    public void onRequestStart(Object requestTag) {
+    public void onRequestStart(SimpleRequest requestTag) {
 
     }
 
     @Override
-    public void onResponse(Object requestTag, SimpleResponse response) {
+    public void onResponse(SimpleRequest requestTag, SimpleResponse response) {
 
     }
 
     @Override
-    public void onFailure(Object requestTag, Throwable exception) {
+    public void onFailure(SimpleRequest requestTag, Throwable exception) {
 
     }
 }

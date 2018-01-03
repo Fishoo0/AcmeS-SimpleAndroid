@@ -7,9 +7,10 @@ import android.support.annotation.Nullable;
 import android.widget.Toast;
 
 import com.acmes.ethome.ETHomeActivity;
+import com.acmes.ethome.main.MainActivity;
 import com.acmes.ethome.mode.request.LoginRequest;
 import com.acmes.ethome.mode.response.ETHomeResponse;
-import com.acmes.ethome.main.MainActivity;
+import com.acmes.simpleandroid.mvc.model.SimpleRequest;
 import com.acmes.simpleandroid.mvc.model.SimpleResponse;
 
 /**
@@ -45,7 +46,7 @@ public class LoginDispatcherActivity extends ETHomeActivity<LoginMode> {
 
     @Override
     protected LoginMode createMode() {
-        return LoginMode.getInstance();
+        return new LoginMode();
     }
 
 
@@ -56,7 +57,7 @@ public class LoginDispatcherActivity extends ETHomeActivity<LoginMode> {
 
 
     @Override
-    public void onResponse(Object requestTag, SimpleResponse response) {
+    public void onResponse(SimpleRequest requestTag, SimpleResponse response) {
         super.onResponse(requestTag, response);
         if (response instanceof ETHomeResponse) {
             if (!((ETHomeResponse) response).isSuccess()) {
