@@ -52,7 +52,6 @@ public abstract class SimpleRequest<Response extends SimpleResponse> {
         return mCanceled;
     }
 
-
     public abstract void buildParams(Object someNetEngineMaybe);
 
 }

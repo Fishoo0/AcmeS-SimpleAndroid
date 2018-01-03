@@ -4,18 +4,7 @@ package com.acmes.simpleandroid.mvc.model;
  * Created by fishyu on 2017/8/23.
  */
 
-public class SimpleResponse<T> {
-
-    public int mCode;
-
-    public String mMessage;
-
-    public T mData;
-
-    public boolean isSuccess() {
-        return true;
-    }
-
+public abstract class SimpleResponse<T> {
 
     // do nothing ...
     public void onAppendLastResponse(SimpleResponse<T> old) {
@@ -23,4 +12,26 @@ public class SimpleResponse<T> {
     }
 
 
+    /**
+     * Getting result from server
+     *
+     * @return
+     */
+    public abstract boolean isSuccess();
+
+
+    /**
+     * Getting message from server
+     *
+     * @return
+     */
+    public abstract String getMessage();
+
+
+    /**
+     * Getting data from server
+     *
+     * @return
+     */
+    public abstract T getData();
 }

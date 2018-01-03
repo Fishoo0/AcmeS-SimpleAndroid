@@ -49,7 +49,7 @@ public class RetrofitSimpleModel<API> extends SimpleModel {
     }
 
 
-    public <T extends SimpleResponse> RetrofitSimpleModel performRequestRetrofit(final T lastResponse, final Class<T> requestTag, Observable<T> observable) {
+    public <T extends SimpleResponse> RetrofitSimpleModel performRequestRetrofit(final T lastResponse, final Object requestTag, Observable<T> observable) {
         return performRequestRetrofit(lastResponse, requestTag, mSimpleCallback, observable);
     }
 
@@ -61,7 +61,7 @@ public class RetrofitSimpleModel<API> extends SimpleModel {
      * @param <T>
      * @return
      */
-    public <T extends SimpleResponse> RetrofitSimpleModel performRequestRetrofit(final T lastResponse, final Class<T> requestTag, final ISimpleModeCallback callback, Observable<T> observable) {
+    public <T extends SimpleResponse> RetrofitSimpleModel performRequestRetrofit(final T lastResponse, final Object requestTag, final ISimpleModeCallback callback, Observable<T> observable) {
         Log.v(TAG, "performRequest");
         Disposable disposable = observable.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

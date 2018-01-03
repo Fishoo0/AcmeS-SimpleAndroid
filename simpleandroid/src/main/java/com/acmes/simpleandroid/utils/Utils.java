@@ -2,6 +2,7 @@ package com.acmes.simpleandroid.utils;
 
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.widget.Toast;
 
 import com.acmes.simpleandroid.mvc.SimpleApplication;
 
@@ -42,4 +43,16 @@ public class Utils {
         }
         return localVersion;
     }
+
+
+    /**
+     * Show toast
+     *
+     * @param message
+     * @return
+     */
+    public static final void showToast(String message) {
+        Toast.makeText(SimpleApplication.getInstance(), message, Toast.LENGTH_SHORT).show();
+    }
+
 }

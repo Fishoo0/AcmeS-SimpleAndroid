@@ -20,7 +20,7 @@ public class DemoApplication extends SimpleApplication {
     @Override
     public void onCreate() {
         super.onCreate();
-        mSquareNetwork = new SquareNetwork(this, getBaseUrl());
+        mSquareNetwork = new SquareNetwork(this);
     }
 
     protected String getBaseUrl() {
@@ -35,7 +35,7 @@ public class DemoApplication extends SimpleApplication {
     }
 
     public Retrofit getRetrofit() {
-        return mSquareNetwork.getRetrofit();
+        return mSquareNetwork.buildRetrofit(getBaseUrl());
     }
 
 

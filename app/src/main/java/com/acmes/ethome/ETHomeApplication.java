@@ -26,22 +26,16 @@ public class ETHomeApplication extends SimpleApplication {
     @Override
     protected void onInitialize() {
         super.onInitialize();
-        mSquareNetwork = new SquareNetwork(this, getBaseUrl());
+        mSquareNetwork = new SquareNetwork(this);
         updateProgress(20);
         while (getInitializeProgress() < 100) {
             try {
-                Thread.sleep((long) (Math.random() * 200));
+                Thread.sleep((long) (Math.random() * 100));
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
             updateProgress(getInitializeProgress() + 1);
         }
-
-
-    }
-
-    protected String getBaseUrl() {
-        return "http://10.226.66.204:5000/";
     }
 
     protected SquareNetwork mSquareNetwork;
@@ -50,9 +44,8 @@ public class ETHomeApplication extends SimpleApplication {
         return mSquareNetwork.getPicasso();
     }
 
-    public Retrofit getRetrofit() {
-        return mSquareNetwork.getRetrofit();
+    public Retrofit buildRetrofit(String url) {
+        return mSquareNetwork.buildRetrofit(url);
     }
-
 
 }

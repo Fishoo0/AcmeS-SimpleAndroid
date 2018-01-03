@@ -30,13 +30,9 @@ public class SquareNetwork {
 
     private Picasso mPicasso;
 
-    private Retrofit mRetrofit;
-
-    public SquareNetwork(Application application, String baseUrl) {
+    public SquareNetwork(Application application) {
         mHttpLoggingInterceptor = initHttpLoggingInterceptor();
         mOkHttpClient = initOkHttp(mHttpLoggingInterceptor);
-
-        mRetrofit = initRetrofit(mOkHttpClient, baseUrl);
 
         mPicasso = initPicasso(application, mOkHttpClient);
     }
@@ -106,8 +102,8 @@ public class SquareNetwork {
      *
      * @return
      */
-    public Retrofit getRetrofit() {
-        return mRetrofit;
+    public Retrofit buildRetrofit(String baseUrl) {
+        return initRetrofit(mOkHttpClient, baseUrl);
     }
 
 

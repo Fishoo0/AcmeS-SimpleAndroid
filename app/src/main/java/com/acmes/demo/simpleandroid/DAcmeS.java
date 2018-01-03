@@ -13,4 +13,19 @@ public class DAcmeS extends SimpleResponse {
     public String we;
 
     public String logo;
+
+    @Override
+    public boolean isSuccess() {
+        return false;
+    }
+
+    @Override
+    public String getMessage() {
+        return null;
+    }
+
+    @Override
+    public Object getData() {
+        return null;
+    }
 }

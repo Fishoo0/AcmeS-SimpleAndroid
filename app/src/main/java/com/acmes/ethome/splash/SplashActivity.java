@@ -1,6 +1,6 @@
 package com.acmes.ethome.splash;
 
-import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.widget.ImageView;
@@ -9,10 +9,11 @@ import android.widget.TextView;
 import com.acmes.ethome.ETHomeActivity;
 import com.acmes.ethome.ETHomeApplication;
 import com.acmes.ethome.R;
+import com.acmes.ethome.login.LoginDispatcherActivity;
+import com.acmes.simpleandroid.mvc.model.SimpleModel;
 import com.acmes.simpleandroid.utils.Utils;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import hugo.weaving.DebugLog;
 
 /**
@@ -41,10 +42,22 @@ public class SplashActivity extends ETHomeActivity implements ETHomeApplication.
     }
 
     @Override
+    protected SimpleModel createMode() {
+        return null;
+    }
+
+    @Override
     public void onInitializing(int progress) {
         mInitialProgress.setText(progress + " %");
         if (progress == 100) {
             //Jump to home
+            ETHomeApplication.getInstance().getHandler().post(new Runnable() {
+                @Override
+                public void run() {
+                    startActivity(new Intent(SplashActivity.this, LoginDispatcherActivity.class));
+                    finish();
+                }
+            });
         }
     }
 
