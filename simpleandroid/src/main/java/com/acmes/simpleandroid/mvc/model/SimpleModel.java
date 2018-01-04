@@ -98,20 +98,41 @@ public abstract class SimpleModel implements ISimpleModeCallback {
     }
 
 
-    public void onRequestStart(SimpleRequest request, Object callable, ISimpleModeCallback callback) {
+    /**
+     * Call this method if u want to update request status onRequestStart
+     *
+     * @param request
+     * @param cancelable Used to cancel request
+     * @param callback
+     */
+    protected void onRequestStart(SimpleRequest request, Object cancelable, ISimpleModeCallback callback) {
         if (getRequestsQueen().containsKey(request)) {
             onCancelRequest(request, getRequestsQueen().get(request));
         }
-        mRequests.put(request, callable);
+        mRequests.put(request, cancelable);
         callback.onRequestStart(request);
     }
 
-    public void onResponse(SimpleRequest request, SimpleResponse response, ISimpleModeCallback callback) {
+    /**
+     * Call this method if u want to update request status onResponse
+     *
+     * @param request
+     * @param response
+     * @param callback
+     */
+    protected void onResponse(SimpleRequest request, SimpleResponse response, ISimpleModeCallback callback) {
         mRequests.remove(request);
         callback.onResponse(request, response);
     }
 
-    public void onFailure(SimpleRequest request, Throwable exception, ISimpleModeCallback callback) {
+    /**
+     * Call this method if u want to update request status onFailure
+     *
+     * @param request
+     * @param exception
+     * @param callback
+     */
+    protected void onFailure(SimpleRequest request, Throwable exception, ISimpleModeCallback callback) {
         mRequests.remove(request);
         callback.onFailure(request, exception);
     }

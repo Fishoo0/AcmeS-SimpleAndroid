@@ -1,5 +1,7 @@
 package com.acmes.ethome.login;
 
+import android.text.TextUtils;
+
 import com.acmes.ethome.ETHomeMode;
 import com.acmes.ethome.mode.bean.DUser;
 import com.acmes.ethome.mode.request.LoginRequest;
@@ -38,23 +40,35 @@ public class LoginMode extends ETHomeMode {
     /**
      * Logout
      *
-     * @param userName
+     * @param request
      */
-    public void logout(String userName) {
-
+    public void logout(LogoutRequest request) {
+        performRequest(request);
     }
 
 
     @Override
+    public void onRequestStart(SimpleRequest request) {
+        // do it first
+        if (request instanceof LogoutRequest) {
+            DUser user = new DUser(((LogoutRequest) request).user_name, ((LogoutRequest) request).user_password);
+            mAccountManager.removeUser(user);
+        }
+
+        super.onRequestStart(request);
+    }
+
+    @Override
     public void onResponse(SimpleRequest request, SimpleResponse response) {
+        // do it first
         if (response.isSuccess() && response.getData() != null) {
             if (request instanceof LoginRequest && response.getData() instanceof DUser) {
                 DUser user = new DUser(((LoginRequest) request).user_name, ((LoginRequest) request).user_password);
-                mAccountManager.addUser(user);
+                if (!TextUtils.isEmpty(((LoginRequest) request).user_password)) {
+                    mAccountManager.addUser(user);
+                }
             } else if (request instanceof RegisterRequest && response.getData() instanceof DUser) {
                 //do nothing
-            } else if (request instanceof LogoutRequest) {
-                mAccountManager.removeUser((DUser) response.getData());
             }
         }
         super.onResponse(request, response);

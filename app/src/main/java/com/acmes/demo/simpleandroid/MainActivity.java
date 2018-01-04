@@ -115,8 +115,8 @@
 //        Call<DAcmeS> call = acmesService.acmes();
 //        call.enqueue(new Callback<DAcmeS>() {
 //            @Override
-//            public void onResponse(Call<DAcmeS> call, Response<DAcmeS> response) {
-//                Log.d(TAG, "onResponse");
+//            public void deliveryOnResponse(Call<DAcmeS> call, Response<DAcmeS> response) {
+//                Log.d(TAG, "deliveryOnResponse");
 //
 //                DAcmeS data = response.body();
 //
@@ -143,8 +143,8 @@
 //            }
 //
 //            @Override
-//            public void onFailure(Call<DAcmeS> call, Throwable t) {
-//                Log.d(TAG, "onFailure");
+//            public void deliveryOnFailure(Call<DAcmeS> call, Throwable t) {
+//                Log.d(TAG, "deliveryOnFailure");
 //
 //                mTextView.setText("Failed!");
 //

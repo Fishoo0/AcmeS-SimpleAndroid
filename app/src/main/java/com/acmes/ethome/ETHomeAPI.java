@@ -2,6 +2,7 @@ package com.acmes.ethome;
 
 import com.acmes.ethome.mode.bean.DUser;
 import com.acmes.ethome.mode.request.LoginRequest;
+import com.acmes.ethome.mode.request.LogoutRequest;
 import com.acmes.ethome.mode.request.RegisterRequest;
 import com.acmes.ethome.mode.response.ETHomeResponse;
 
@@ -24,6 +25,6 @@ public interface ETHomeAPI {
     Observable<ETHomeResponse<DUser>> login(@Body LoginRequest loginRequest);
 
     @POST("logout")
-    Observable<ETHomeResponse> logout(String userName);
+    Observable<ETHomeResponse> logout(@Body LogoutRequest request);
 
 }
