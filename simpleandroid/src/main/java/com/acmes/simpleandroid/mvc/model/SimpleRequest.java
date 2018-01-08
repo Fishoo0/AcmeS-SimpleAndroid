@@ -54,4 +54,14 @@ public abstract class SimpleRequest<Response extends SimpleResponse> {
 
     public abstract void buildParams(Object someNetEngineMaybe);
 
+
+    /**
+     * Getting tag for this request.
+     *
+     * @return
+     */
+    protected Object getTag() {
+        return this;
+    }
+
 }

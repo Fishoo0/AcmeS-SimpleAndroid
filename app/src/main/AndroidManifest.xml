@@ -15,17 +15,18 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
-        android:supportsRtl="true">
+        android:supportsRtl="true"
+        android:theme="@style/AcmeApplicationTheme">
         <activity
             android:name=".splash.SplashActivity"
-            android:theme="@style/SplashTheme">
+            android:theme="@style/AcmeSplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".login.LoginDispatcherActivity" />
+        <activity android:name=".login.ETHomeDispatcherActivity" />
         <activity android:name=".login.LoginActivity" />
         <activity android:name=".login.RegisterActivity" />
         <activity android:name=".main.MainActivity" />

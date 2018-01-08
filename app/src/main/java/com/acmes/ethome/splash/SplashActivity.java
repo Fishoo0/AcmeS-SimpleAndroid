@@ -1,15 +1,15 @@
 package com.acmes.ethome.splash;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.acmes.ethome.ETHomeActivity;
 import com.acmes.ethome.ETHomeApplication;
 import com.acmes.ethome.R;
-import com.acmes.ethome.login.LoginDispatcherActivity;
+import com.acmes.ethome.login.ETHomeDispatcherActivity;
 import com.acmes.simpleandroid.mvc.model.SimpleModel;
 import com.acmes.simpleandroid.utils.Utils;
 
@@ -48,22 +48,27 @@ public class SplashActivity extends ETHomeActivity implements ETHomeApplication.
 
     @Override
     public void onInitializing(int progress) {
+        Log.e(TAG, "onInitializing -> " + progress);
         mInitialProgress.setText(progress + " %");
         if (progress == 100) {
-            //Jump to home
-            ETHomeApplication.getInstance().getHandler().post(new Runnable() {
-                @Override
-                public void run() {
-                    startActivity(new Intent(SplashActivity.this, LoginDispatcherActivity.class));
-                    finish();
-                }
-            });
+            ETHomeDispatcherActivity.jumpToThis(this);
         }
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        ETHomeApplication.getInstance().unregisterInitializeListener(this);
+        ETHomeApplication.getInstance().unregisterInitializeListener(SplashActivity.this);
     }
+
 }

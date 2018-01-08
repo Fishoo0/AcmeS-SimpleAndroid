@@ -42,12 +42,12 @@ public class LoginActivity extends ETHomeActivity<LoginMode> implements View.OnC
     Button mButton;
 
 
-    public static final String USER_NAME = "user";
+    public static final String LOGIN_INFO = "user";
 
     public static final void jumpToThis(Context context, DUser user) {
         Intent intent = new Intent(context, LoginActivity.class);
         if (user != null) {
-            intent.putExtra(USER_NAME, user);
+            intent.putExtra(LOGIN_INFO, user);
         }
         context.startActivity(intent);
     }
@@ -58,9 +58,14 @@ public class LoginActivity extends ETHomeActivity<LoginMode> implements View.OnC
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login_activity);
 
-        if (getIntent().hasExtra(USER_NAME)) {
-            DUser user = (DUser) getIntent().getSerializableExtra(USER_NAME);
-            getModel().login(new LoginRequest(user.mUserName, user.mUserPassword));
+        if (getIntent().hasExtra(LOGIN_INFO)) {
+            final DUser user = (DUser) getIntent().getSerializableExtra(LOGIN_INFO);
+            getHandler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    getModel().login(new LoginRequest(user.mUserName, user.mUserPassword));
+                }
+            }, 500);
         }
     }
 
@@ -77,7 +82,7 @@ public class LoginActivity extends ETHomeActivity<LoginMode> implements View.OnC
     public void onResponse(SimpleRequest request, SimpleResponse response) {
         super.onResponse(request, response);
         if (response.isSuccess()) {
-            LoginDispatcherActivity.jumpToThis(this);
+            ETHomeDispatcherActivity.jumpToThis(this);
             finish();
         }
 

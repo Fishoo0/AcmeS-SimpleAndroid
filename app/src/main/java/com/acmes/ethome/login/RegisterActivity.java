@@ -50,11 +50,12 @@ public class RegisterActivity extends ETHomeActivity<LoginMode> implements View.
         super.onResponse(request, response);
         if (request instanceof RegisterRequest) {
             if (response.isSuccess()) {
-                LoginDispatcherActivity.jumpToThis(
+                ETHomeDispatcherActivity.jumpToThis(
                         this,
-                        LoginDispatcherActivity
+                        ETHomeDispatcherActivity.CMD_LOGIN,
+                        ETHomeDispatcherActivity
                                 .getJumpToThisIntent(this)
-                                .putExtra(LoginActivity.USER_NAME,
+                                .putExtra(LoginActivity.LOGIN_INFO,
                                         new DUser(((RegisterRequest) request).user_name, ((RegisterRequest) request).user_password))
                 );
                 finish();

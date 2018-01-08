@@ -1,5 +1,7 @@
 package com.acmes.ethome.login;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 
@@ -16,11 +18,16 @@ import com.acmes.simpleandroid.utils.Utils;
 public class LogoutActivity extends ETHomeActivity<LoginMode> {
 
 
+    public static final void jumpToThis(Context context) {
+        Intent intent = new Intent(context, LogoutActivity.class);
+        context.startActivity(intent);
+    }
+
+
     @Override
     protected LoginMode createMode() {
         return LoginMode.getInstance();
     }
-
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -37,11 +44,16 @@ public class LogoutActivity extends ETHomeActivity<LoginMode> {
     public void onRequestStart(SimpleRequest request) {
         super.onRequestStart(request);
 
-        Utils.showToast("U have been logout successfully!");
-
         // jump to LoginDispatchActivity
-        LoginDispatcherActivity.jumpToThis(this);
+        ETHomeDispatcherActivity.jumpToThis(this);
         finish();
+
+        Utils.showToast("U have been logout successfully!");
     }
 
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+    }
 }

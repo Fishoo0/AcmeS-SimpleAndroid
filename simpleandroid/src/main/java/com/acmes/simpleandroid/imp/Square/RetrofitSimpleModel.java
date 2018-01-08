@@ -42,7 +42,7 @@ public class RetrofitSimpleModel<API> extends SimpleModel {
     @Override
     public void performRequest(SimpleRequest request, ISimpleModeCallback callback) {
         if (!(request instanceof RetrofitSimpleRequest)) {
-            throw new IllegalArgumentException("Request must be instance of RetrofitSimpleRequest");
+            throw new IllegalArgumentException("RetrofitSimpleModel only accepts RetrofitSimpleRequest");
         }
         performRequestRetrofit(request, callback, ((RetrofitSimpleRequest) request).callAPI(getAPI()));
     }

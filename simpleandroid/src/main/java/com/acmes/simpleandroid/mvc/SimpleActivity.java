@@ -31,7 +31,7 @@ public abstract class SimpleActivity<T extends SimpleModel> extends FragmentActi
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Log.v(TAG, "onCreate");
+        Log.v(TAG, "onCreate -> " + getCallingActivity() + getCallingPackage() + getComponentName());
         mController = new SimpleController(this) {
             @Override
             public SimpleModel createModel() {

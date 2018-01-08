@@ -105,6 +105,7 @@ public abstract class SimpleController implements ISimpleModeCallback {
     public void onDestroy() {
         mHandler.removeCallbacksAndMessages(null);
         if (mModel != null) {
+            mModel.removeSimpleCallback(this);
             mModel.onDestroy();
         }
     }

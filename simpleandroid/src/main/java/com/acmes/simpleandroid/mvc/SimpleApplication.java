@@ -4,15 +4,12 @@ import android.app.Application;
 import android.content.res.Configuration;
 import android.os.Handler;
 import android.os.HandlerThread;
-import android.os.Looper;
 import android.util.Log;
 
 import com.squareup.leakcanary.LeakCanary;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import hugo.weaving.DebugLog;
 
 /**
  * Created by fishyu on 2017/9/5.
@@ -27,7 +24,7 @@ public class SimpleApplication extends Application {
 
     protected static SimpleApplication mInstance;
 
-    private List<IInitializeListener> mInitializeListener;
+    private List<IInitializeListener> mInitializeListeners;
 
     private int mInitializeProgress = 0;
 
@@ -115,18 +112,21 @@ public class SimpleApplication extends Application {
      *
      * @param listener
      */
-    public synchronized void registerInitializeListener(IInitializeListener listener) {
+    public synchronized void registerInitializeListener(final IInitializeListener listener) {
         if (listener == null) {
             throw new IllegalArgumentException("Listener can not be null");
         }
-        if (mInitializeListener == null) {
-            mInitializeListener = new ArrayList<>();
+        if (mInitializeListeners == null) {
+            mInitializeListeners = new ArrayList<>();
         }
-        mInitializeListener.remove(listener);
-        mInitializeListener.add(listener);
-
-        //refresh status
-        listener.onInitializing(mInitializeProgress);
+        mInitializeListeners.remove(listener);
+        mInitializeListeners.add(listener);
+        getHandler().post(new Runnable() {
+            @Override
+            public void run() {
+                listener.onInitializing(getInitializeProgress());
+            }
+        });
     }
 
     /**
@@ -135,13 +135,10 @@ public class SimpleApplication extends Application {
      * @param listener
      */
     public synchronized void unregisterInitializeListener(IInitializeListener listener) {
-        if (listener == null) {
-            throw new IllegalArgumentException("Listener can not be null");
-        }
-        if (mInitializeListener == null) {
+        if (mInitializeListeners == null) {
             return;
         }
-        mInitializeListener.remove(listener);
+        mInitializeListeners.remove(listener);
     }
 
     /**
@@ -149,24 +146,26 @@ public class SimpleApplication extends Application {
      *
      * @param progress
      */
-    protected final synchronized void updateProgress(int progress) {
-        if (progress >= 0 && progress <= 100) {
-            mInitializeProgress = progress;
-        } else {
-            throw new IllegalArgumentException("Invalid status -> " + progress);
+    protected final synchronized void updateProgress(final int progress) {
+        Log.v(TAG, "updateProgress -> " + progress);
+        if (progress <= mInitializeProgress) {
+            Log.e(TAG, "\t progress is smaller than current, just return");
+            return;
         }
-        if (mInitializeListener != null) {
-            for (final IInitializeListener listener : mInitializeListener) {
-                if (Looper.myLooper() != Looper.getMainLooper()) {
-                    getHandler().post(new Runnable() {
-                        @Override
-                        public void run() {
-                            listener.onInitializing(mInitializeProgress);
-                        }
-                    });
-                } else {
-                    listener.onInitializing(mInitializeProgress);
-                }
+        if (progress > 100) {
+            Log.e(TAG, "\t progress is bigger than 100%, force set progress to 100");
+            updateProgress(100);
+            return;
+        }
+        mInitializeProgress = progress;
+        if (mInitializeListeners != null) {
+            for (final IInitializeListener listener : mInitializeListeners) {
+                getHandler().post(new Runnable() {
+                    @Override
+                    public void run() {
+                        listener.onInitializing(progress);
+                    }
+                });
             }
         }
     }
@@ -180,9 +179,9 @@ public class SimpleApplication extends Application {
             Log.e(TAG, "LeakCanary isInAnalyzerProcess , return ");
             // This process is dedicated to LeakCanary for heap analysis.
             // You should not onInitialize your app in this process.
-            return;
+            LeakCanary.install(SimpleApplication.this);
         }
-        LeakCanary.install(SimpleApplication.this);
+
         Log.e(TAG, "LeakCanary installed");
         updateProgress(10);
     }
