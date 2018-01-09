@@ -30,7 +30,7 @@ public class ETHomeApplication extends SimpleApplication {
         updateProgress(20);
         while (getInitializeProgress() < 100) {
             try {
-                Thread.sleep((long) (Math.random() * 50));
+                Thread.sleep((long) (Math.random() * 10));
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
