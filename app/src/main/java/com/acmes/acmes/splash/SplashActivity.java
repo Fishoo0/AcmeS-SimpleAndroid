@@ -49,7 +49,7 @@ public class SplashActivity extends AcmesActivity implements AcmesApplication.II
     @Override
     public void onInitializing(int progress) {
         Log.e(TAG, "onInitializing -> " + progress);
-        mInitialProgress.setText(progress + " %");
+//        mInitialProgress.setText(progress + " %");
         if (progress == 100) {
             AcmesDispatcherActivity.jumpToThis(this);
         }

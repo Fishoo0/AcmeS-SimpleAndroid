@@ -23,7 +23,9 @@
         android:gravity="center"
         android:text="@string/value_splash_version"
         android:textColor="#444444"
-        android:textSize="12sp" />
+        android:textSize="12sp"
+        android:visibility="gone"
+        />
 
     <TextView
         android:id="@+id/progress"
@@ -31,7 +33,6 @@
         android:layout_height="wrap_content"
         android:layout_gravity="right"
         android:layout_margin="5dp"
-        android:text="Initializing 10 %"
         android:textColor="#444444"
         android:textSize="15sp" />
 

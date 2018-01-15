@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">BabyHome</string>
+    <string name="app_name">Her</string>
     <string name="value_splash_version">CopyRight @AcmeS Baby Series by Version %s </string>
 
     <string name="value_common_net_error">网络错误 :(</string>
