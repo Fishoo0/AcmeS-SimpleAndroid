@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -38,7 +40,7 @@ public class LoginActivity extends AcmesActivity<LoginMode> implements View.OnCl
     EditText mUserPassword;
 
 
-    @BindView(R.id.submit_button)
+    @BindView(R.id.goto_register_button)
     Button mButton;
 
 
@@ -67,14 +69,15 @@ public class LoginActivity extends AcmesActivity<LoginMode> implements View.OnCl
                 }
             }, 500);
         }
+
+        getSupportActionBar().setTitle("Login");
     }
 
 
     @Override
     public void onRequestStart(SimpleRequest request) {
         super.onRequestStart(request);
-        mButton.setText("Login ing ...");
-        mButton.setClickable(false);
+        getSupportActionBar().setTitle("Login ing ...");
     }
 
 
@@ -87,9 +90,7 @@ public class LoginActivity extends AcmesActivity<LoginMode> implements View.OnCl
         }
 
         Utils.showToast(response.getMessage() + " " + response.getData());
-
-        mButton.setClickable(true);
-        mButton.setText("Login");
+        getSupportActionBar().setTitle("Login");
     }
 
 
@@ -97,24 +98,37 @@ public class LoginActivity extends AcmesActivity<LoginMode> implements View.OnCl
     public void onFailure(SimpleRequest request, Throwable exception) {
         super.onFailure(request, exception);
 
-        mButton.setClickable(true);
-        mButton.setText("Login");
+        getSupportActionBar().setTitle("Login");
     }
 
-    @OnClick({R.id.submit_button, R.id.goto_register_button})
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.actionbar_login, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_login:
+                getModel().login(new LoginRequest(mUserName.getText().toString(), mUserPassword.getText().toString()));
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @OnClick({R.id.goto_register_button, R.id.forget_password})
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.submit_button:
-                getModel().login(new LoginRequest(mUserName.getText().toString(), mUserPassword.getText().toString()));
-                break;
-
             case R.id.goto_register_button:
                 startActivity(new Intent(this, RegisterActivity.class));
                 finish();
                 break;
+            case R.id.forget_password:
+                break;
         }
     }
-
 
 }

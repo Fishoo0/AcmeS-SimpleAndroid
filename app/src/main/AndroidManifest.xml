@@ -27,7 +27,8 @@
             </intent-filter>
         </activity>
         <activity android:name="com.acmes.acmes.login.AcmesDispatcherActivity" />
-        <activity android:name="com.acmes.acmes.login.LoginActivity" />
+        <activity android:name="com.acmes.acmes.login.LoginActivity"
+            />
         <activity android:name="com.acmes.acmes.login.RegisterActivity" />
         <activity android:name="com.acmes.acmes.main.MainActivity" />
         <activity android:name="com.acmes.acmes.login.LogoutActivity" />

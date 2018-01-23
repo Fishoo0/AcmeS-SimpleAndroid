@@ -6,6 +6,7 @@ import android.os.Handler;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,7 +22,7 @@ import butterknife.ButterKnife;
 /**
  * Created by fishyu on 2017/8/23.
  */
-public abstract class SimpleActivity<T extends SimpleModel> extends FragmentActivity implements ISimpleModeCallback {
+public abstract class SimpleActivity<T extends SimpleModel> extends AppCompatActivity implements ISimpleModeCallback {
 
     protected final String TAG = getClass().getSimpleName();
     protected final boolean DEBUG = SimpleUtils.DEBUG;
