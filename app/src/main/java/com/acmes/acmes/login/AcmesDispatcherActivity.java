@@ -75,7 +75,7 @@ public class AcmesDispatcherActivity extends AcmesActivity<LoginMode> {
     }
 
     @Override
-    protected LoginMode createMode() {
+    protected LoginMode createModel() {
         return LoginMode.getInstance();
     }
 

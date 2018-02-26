@@ -24,4 +24,5 @@ public class AcmesResponse<T> extends RetrofitSimpleResponse {
     public T getData() {
         return data;
     }
+
 }

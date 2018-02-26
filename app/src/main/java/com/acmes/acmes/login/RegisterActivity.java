@@ -2,7 +2,8 @@ package com.acmes.acmes.login;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.view.View;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.EditText;
 
 import com.acmes.acmes.AcmesActivity;
@@ -14,16 +15,15 @@ import com.acmes.simpleandroid.mvc.model.SimpleResponse;
 import com.acmes.simpleandroid.utils.Utils;
 
 import butterknife.BindView;
-import butterknife.OnClick;
 
 /**
  * Created by fishyu on 2018/1/2.
  */
 
-public class RegisterActivity extends AcmesActivity<LoginMode> implements View.OnClickListener {
+public class RegisterActivity extends AcmesActivity<LoginMode> {
 
     @Override
-    protected LoginMode createMode() {
+    protected LoginMode createModel() {
         return new LoginMode();
     }
 
@@ -35,15 +35,22 @@ public class RegisterActivity extends AcmesActivity<LoginMode> implements View.O
     EditText mUserPassword;
 
 
-    @BindView(R.id.submit_button)
-    View mButton;
-
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.register_activity);
+        getSupportActionBar().setTitle("Register");
+
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.actionbar_login, menu);
+        return true;
+    }
 
     @Override
     public void onResponse(SimpleRequest request, SimpleResponse response) {
@@ -65,14 +72,15 @@ public class RegisterActivity extends AcmesActivity<LoginMode> implements View.O
     }
 
 
-    @OnClick(R.id.submit_button)
     @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.submit_button:
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_login:
                 getModel().register(new RegisterRequest(mUserName.getText().toString(), mUserPassword.getText().toString()));
-                break;
+                return true;
         }
+        return super.onOptionsItemSelected(item);
     }
+
 
 }

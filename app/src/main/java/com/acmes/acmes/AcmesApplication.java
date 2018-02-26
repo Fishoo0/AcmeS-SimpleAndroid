@@ -40,8 +40,8 @@ public class AcmesApplication extends SimpleApplication {
 
     protected SquareNetwork mSquareNetwork;
 
-    public Picasso getPicasso() {
-        return mSquareNetwork.getPicasso();
+    public static Picasso getPicasso() {
+        return getInstance().mSquareNetwork.getPicasso();
     }
 
     public Retrofit buildRetrofit(String url) {

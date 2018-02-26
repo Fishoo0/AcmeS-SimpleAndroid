@@ -25,7 +25,7 @@ public class LogoutActivity extends AcmesActivity<LoginMode> {
 
 
     @Override
-    protected LoginMode createMode() {
+    protected LoginMode createModel() {
         return LoginMode.getInstance();
     }
 

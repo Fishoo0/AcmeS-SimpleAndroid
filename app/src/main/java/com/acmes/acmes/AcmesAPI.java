@@ -1,6 +1,8 @@
 package com.acmes.acmes;
 
+import com.acmes.acmes.mode.bean.DCategories;
 import com.acmes.acmes.mode.bean.DUser;
+import com.acmes.acmes.mode.request.CategoriesRequest;
 import com.acmes.acmes.mode.request.LoginRequest;
 import com.acmes.acmes.mode.request.LogoutRequest;
 import com.acmes.acmes.mode.request.RegisterRequest;
@@ -16,7 +18,7 @@ import retrofit2.http.POST;
 
 public interface AcmesAPI {
 
-    String BASE_URL = "http://10.226.66.204:5000";
+    String BASE_URL = "http://45.77.179.207:5000";
 
     @POST("register")
     Observable<AcmesResponse<DUser>> register(@Body RegisterRequest loginRequest);
@@ -26,5 +28,8 @@ public interface AcmesAPI {
 
     @POST("logout")
     Observable<AcmesResponse> logout(@Body LogoutRequest request);
+
+    @POST("categories")
+    Observable<DCategories> categories(@Body CategoriesRequest request);
 
 }

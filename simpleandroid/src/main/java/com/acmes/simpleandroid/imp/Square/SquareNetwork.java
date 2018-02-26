@@ -1,10 +1,12 @@
 package com.acmes.simpleandroid.imp.Square;
 
 import android.app.Application;
+import android.content.Context;
 import android.util.Log;
 
 import com.google.gson.Gson;
 import com.jakewharton.picasso.OkHttp3Downloader;
+import com.readystatesoftware.chuck.ChuckInterceptor;
 import com.squareup.picasso.LruCache;
 import com.squareup.picasso.Picasso;
 
@@ -29,8 +31,10 @@ public class SquareNetwork {
     private OkHttpClient mOkHttpClient;
 
     private Picasso mPicasso;
+    private Context mContext;
 
     public SquareNetwork(Application application) {
+        mContext = application;
         mHttpLoggingInterceptor = initHttpLoggingInterceptor();
         mOkHttpClient = initOkHttp(mHttpLoggingInterceptor);
 
@@ -53,6 +57,7 @@ public class SquareNetwork {
     private OkHttpClient initOkHttp(HttpLoggingInterceptor httpLoggingInterceptor) {
         OkHttpClient mOkHttpClient = new OkHttpClient.Builder()
                 .addInterceptor(httpLoggingInterceptor)
+                .addInterceptor(new ChuckInterceptor(mContext))
                 .build();
         return mOkHttpClient;
     }

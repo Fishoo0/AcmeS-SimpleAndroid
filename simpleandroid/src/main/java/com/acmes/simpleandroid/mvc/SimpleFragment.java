@@ -1,6 +1,8 @@
 package com.acmes.simpleandroid.mvc;
 
+import android.content.Context;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -8,7 +10,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.acmes.simpleandroid.mvc.controller.SimpleController;
 import com.acmes.simpleandroid.mvc.model.SimpleModel;
 import com.acmes.simpleandroid.mvc.model.SimpleRequest;
 import com.acmes.simpleandroid.mvc.model.SimpleResponse;
@@ -21,26 +22,33 @@ public abstract class SimpleFragment<T extends SimpleModel> extends Fragment imp
 
     protected final String TAG = getClass().getSimpleName();
 
-    private SimpleController mController;
+    private Handler mHandler = new Handler();
+    private T mModel;
+
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        Log.v(TAG, "onAttach -> " + context);
+    }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Log.v(TAG, "onCreate");
-        mController = new SimpleController(this) {
-            @Override
-            public SimpleModel createModel() {
-                return SimpleFragment.this.createMode();
-            }
-        };
-        mController.onCreate(savedInstanceState);
     }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
-        Log.v(TAG, "onCreateView");
-        return super.onCreateView(inflater, container, savedInstanceState);
+        View view = super.onCreateView(inflater, container, savedInstanceState);
+        return view;
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        Log.v(TAG, "onActivityCreated");
     }
 
     @Override
@@ -53,14 +61,12 @@ public abstract class SimpleFragment<T extends SimpleModel> extends Fragment imp
     public void onResume() {
         super.onResume();
         Log.v(TAG, "onResume");
-        mController.onResume();
     }
 
     @Override
     public void onPause() {
         super.onPause();
         Log.v(TAG, "onPause");
-        mController.onPause();
     }
 
     @Override
@@ -81,30 +87,49 @@ public abstract class SimpleFragment<T extends SimpleModel> extends Fragment imp
         Log.v(TAG, "onDestroy");
     }
 
-    /**
-     * Getting model for data processing
-     *
-     * @return
-     */
-    public T getModel() {
-        return (T) mController.getModel();
-    }
-
-    protected abstract T createMode();
-
     @Override
     public void onRequestStart(SimpleRequest request) {
-
+        Log.v(TAG, "onRequestStart request -> " + request);
     }
 
     @Override
     public void onResponse(SimpleRequest request, SimpleResponse response) {
-
+        Log.v(TAG, "onResponse request -> " + request + " response -> " + response);
     }
 
     @Override
     public void onFailure(SimpleRequest request, Throwable exception) {
-
+        Log.v(TAG, "onFailure request -> " + request + " exception -> " + exception);
     }
 
+    /**
+     * Getting handler attached to this Controller
+     *
+     * @return
+     */
+    public Handler getHandler() {
+        return mHandler;
+    }
+
+    /**
+     * Creating instance of Model
+     *
+     * @return
+     */
+    protected abstract T createModel();
+
+    /**
+     * Getting instance of Model
+     *
+     * @return
+     */
+    public T getModel() {
+        if (mModel == null) {
+            mModel = createModel();
+            if (mModel != null) {
+                mModel.addSimpleCallback(this);
+            }
+        }
+        return mModel;
+    }
 }

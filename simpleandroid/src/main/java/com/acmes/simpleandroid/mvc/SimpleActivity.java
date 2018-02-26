@@ -5,13 +5,11 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
-import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.acmes.simpleandroid.mvc.controller.SimpleController;
 import com.acmes.simpleandroid.mvc.model.SimpleModel;
 import com.acmes.simpleandroid.mvc.model.SimpleRequest;
 import com.acmes.simpleandroid.mvc.model.SimpleResponse;
@@ -27,31 +25,8 @@ public abstract class SimpleActivity<T extends SimpleModel> extends AppCompatAct
     protected final String TAG = getClass().getSimpleName();
     protected final boolean DEBUG = SimpleUtils.DEBUG;
 
-    private SimpleController mController;
-
-    @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        Log.v(TAG, "onCreate");
-        mController = new SimpleController(this) {
-            @Override
-            public SimpleModel createModel() {
-                return SimpleActivity.this.createMode();
-            }
-        };
-        mController.onCreate(savedInstanceState);
-    }
-
-    /**
-     * Getting model for data processing
-     *
-     * @return
-     */
-    public T getModel() {
-        return (T) mController.getModel();
-    }
-
-    protected abstract T createMode();
+    private Handler mHandler = new Handler();
+    private T mModel;
 
     @Override
     public void setContentView(@LayoutRes int layoutResID) {
@@ -69,6 +44,12 @@ public abstract class SimpleActivity<T extends SimpleModel> extends AppCompatAct
     public void setContentView(View view, ViewGroup.LayoutParams params) {
         super.setContentView(view, params);
         ButterKnife.bind(this);
+    }
+
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        Log.v(TAG, "onCreate");
     }
 
     @Override
@@ -93,14 +74,12 @@ public abstract class SimpleActivity<T extends SimpleModel> extends AppCompatAct
     protected void onResume() {
         super.onResume();
         Log.v(TAG, "onResume");
-        mController.onResume();
     }
 
     @Override
     protected void onPause() {
         super.onPause();
         Log.v(TAG, "onPause");
-        mController.onPause();
     }
 
     @Override
@@ -113,25 +92,58 @@ public abstract class SimpleActivity<T extends SimpleModel> extends AppCompatAct
     protected void onDestroy() {
         super.onDestroy();
         Log.v(TAG, "onDestroy");
-        mController.onDestroy();
-    }
-
-    public final Handler getHandler() {
-        return mController.getHandler();
+        mHandler.removeCallbacksAndMessages(null);
+        if (mModel != null) {
+            mModel.removeSimpleCallback(this);
+            mModel.onDestroy();
+            mModel = null;
+        }
     }
 
     @Override
     public void onRequestStart(SimpleRequest request) {
-
+        Log.v(TAG, "onRequestStart request -> " + request);
     }
 
     @Override
     public void onResponse(SimpleRequest request, SimpleResponse response) {
-
+        Log.v(TAG, "onResponse request -> " + request + " response -> " + response);
     }
 
     @Override
     public void onFailure(SimpleRequest request, Throwable exception) {
-
+        Log.v(TAG, "onFailure request -> " + request + " exception -> " + exception);
     }
+
+    /**
+     * Getting handler attached to this Controller
+     *
+     * @return
+     */
+    public Handler getHandler() {
+        return mHandler;
+    }
+
+    /**
+     * Creating instance of Model
+     *
+     * @return
+     */
+    protected abstract T createModel();
+
+    /**
+     * Getting instance of Model
+     *
+     * @return
+     */
+    public T getModel() {
+        if (mModel == null) {
+            mModel = createModel();
+            if (mModel != null) {
+                mModel.addSimpleCallback(this);
+            }
+        }
+        return mModel;
+    }
+
 }

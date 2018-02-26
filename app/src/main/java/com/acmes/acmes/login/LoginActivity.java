@@ -4,10 +4,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 
 import com.acmes.acmes.AcmesActivity;
@@ -28,21 +28,18 @@ import butterknife.OnClick;
 public class LoginActivity extends AcmesActivity<LoginMode> implements View.OnClickListener {
 
     @Override
-    protected LoginMode createMode() {
+    protected LoginMode createModel() {
         return new LoginMode();
     }
 
-    @BindView(R.id.user_name)
-    EditText mUserName;
+    @BindView(R.id.swipe_refresh_layout)
+    SwipeRefreshLayout mSwipeRefreshLayout;
 
+    @BindView(R.id.user_name)
+    protected EditText mUserName;
 
     @BindView(R.id.user_password)
-    EditText mUserPassword;
-
-
-    @BindView(R.id.goto_register_button)
-    Button mButton;
-
+    protected EditText mUserPassword;
 
     public static final String LOGIN_INFO = "user";
 
@@ -59,6 +56,8 @@ public class LoginActivity extends AcmesActivity<LoginMode> implements View.OnCl
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login_activity);
+        mSwipeRefreshLayout.setEnabled(false);
+
 
         if (getIntent().hasExtra(LOGIN_INFO)) {
             final DUser user = (DUser) getIntent().getSerializableExtra(LOGIN_INFO);
@@ -77,7 +76,8 @@ public class LoginActivity extends AcmesActivity<LoginMode> implements View.OnCl
     @Override
     public void onRequestStart(SimpleRequest request) {
         super.onRequestStart(request);
-        getSupportActionBar().setTitle("Login ing ...");
+
+        mSwipeRefreshLayout.setRefreshing(true);
     }
 
 
@@ -90,15 +90,14 @@ public class LoginActivity extends AcmesActivity<LoginMode> implements View.OnCl
         }
 
         Utils.showToast(response.getMessage() + " " + response.getData());
-        getSupportActionBar().setTitle("Login");
+        mSwipeRefreshLayout.setRefreshing(false);
     }
 
 
     @Override
     public void onFailure(SimpleRequest request, Throwable exception) {
         super.onFailure(request, exception);
-
-        getSupportActionBar().setTitle("Login");
+        mSwipeRefreshLayout.setRefreshing(false);
     }
 
 
@@ -124,7 +123,6 @@ public class LoginActivity extends AcmesActivity<LoginMode> implements View.OnCl
         switch (v.getId()) {
             case R.id.goto_register_button:
                 startActivity(new Intent(this, RegisterActivity.class));
-                finish();
                 break;
             case R.id.forget_password:
                 break;

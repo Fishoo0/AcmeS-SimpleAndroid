@@ -42,7 +42,7 @@ public class SplashActivity extends AcmesActivity implements AcmesApplication.II
     }
 
     @Override
-    protected SimpleModel createMode() {
+    protected SimpleModel createModel() {
         return null;
     }
 
