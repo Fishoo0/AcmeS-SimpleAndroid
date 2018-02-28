@@ -8,7 +8,7 @@ import android.widget.EditText;
 
 import com.acmes.acmes.AcmesActivity;
 import com.acmes.acmes.R;
-import com.acmes.acmes.mode.bean.DUser;
+import com.acmes.acmes.mode.bean.BUser;
 import com.acmes.acmes.mode.request.RegisterRequest;
 import com.acmes.simpleandroid.mvc.model.SimpleRequest;
 import com.acmes.simpleandroid.mvc.model.SimpleResponse;
@@ -63,7 +63,7 @@ public class RegisterActivity extends AcmesActivity<LoginMode> {
                         AcmesDispatcherActivity
                                 .getJumpToThisIntent(this)
                                 .putExtra(LoginActivity.LOGIN_INFO,
-                                        new DUser(((RegisterRequest) request).user_name, ((RegisterRequest) request).user_password))
+                                        new BUser(((RegisterRequest) request).user_name, ((RegisterRequest) request).user_password))
                 );
                 finish();
             }

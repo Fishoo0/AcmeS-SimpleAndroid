@@ -6,7 +6,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 
 import com.acmes.acmes.AcmesActivity;
-import com.acmes.acmes.mode.bean.DUser;
+import com.acmes.acmes.mode.bean.BUser;
 import com.acmes.acmes.mode.request.LogoutRequest;
 import com.acmes.simpleandroid.mvc.model.SimpleRequest;
 import com.acmes.simpleandroid.utils.Utils;
@@ -32,7 +32,7 @@ public class LogoutActivity extends AcmesActivity<LoginMode> {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        DUser user = SharedPrefAccountManager.getInstance().getCurrentUser();
+        BUser user = SharedPrefAccountManager.getInstance().getCurrentUser();
         if (user != null) {
             getModel().performRequest(new LogoutRequest(user.mUserName));
         } else {

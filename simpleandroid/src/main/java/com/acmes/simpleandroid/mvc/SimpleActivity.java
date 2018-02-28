@@ -28,6 +28,8 @@ public abstract class SimpleActivity<T extends SimpleModel> extends AppCompatAct
     private Handler mHandler = new Handler();
     private T mModel;
 
+    private SimpleViewControllerHelper mViewControllerHelper = new SimpleViewControllerHelper();
+
     @Override
     public void setContentView(@LayoutRes int layoutResID) {
         super.setContentView(layoutResID);
@@ -52,6 +54,7 @@ public abstract class SimpleActivity<T extends SimpleModel> extends AppCompatAct
         Log.v(TAG, "onCreate");
     }
 
+
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
@@ -68,36 +71,42 @@ public abstract class SimpleActivity<T extends SimpleModel> extends AppCompatAct
     protected void onStart() {
         super.onStart();
         Log.v(TAG, "onStart");
+        mViewControllerHelper.onStart();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
         Log.v(TAG, "onResume");
+        mViewControllerHelper.onResume();
     }
 
     @Override
     protected void onPause() {
         super.onPause();
         Log.v(TAG, "onPause");
+        mViewControllerHelper.onPause();
     }
 
     @Override
     protected void onStop() {
         super.onStop();
         Log.v(TAG, "onStop");
+        mViewControllerHelper.onStop();
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
         Log.v(TAG, "onDestroy");
+        mViewControllerHelper.onDestroy();
         mHandler.removeCallbacksAndMessages(null);
         if (mModel != null) {
             mModel.removeSimpleCallback(this);
             mModel.onDestroy();
             mModel = null;
         }
+
     }
 
     @Override
@@ -144,6 +153,10 @@ public abstract class SimpleActivity<T extends SimpleModel> extends AppCompatAct
             }
         }
         return mModel;
+    }
+
+    protected SimpleViewControllerHelper getViewControllerHelper() {
+        return mViewControllerHelper;
     }
 
 }

@@ -1,6 +1,6 @@
 package com.acmes.acmes.login;
 
-import com.acmes.acmes.mode.bean.DUser;
+import com.acmes.acmes.mode.bean.BUser;
 
 /**
  * Created by fishyu on 2018/1/2.
@@ -19,7 +19,7 @@ public interface IAccountManager {
      *
      * @return
      */
-    DUser getCurrentUser();
+    BUser getCurrentUser();
 
 
     /**
@@ -27,7 +27,7 @@ public interface IAccountManager {
      *
      * @param user
      */
-    void addUser(DUser user);
+    void addUser(BUser user);
 
 
     /**
@@ -35,7 +35,7 @@ public interface IAccountManager {
      *
      * @param user
      */
-    void removeUser(DUser user);
+    void removeUser(BUser user);
 
 
 }

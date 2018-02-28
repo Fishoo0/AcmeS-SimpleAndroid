@@ -3,7 +3,7 @@ package com.acmes.acmes.login;
 import android.text.TextUtils;
 
 import com.acmes.acmes.AcmesMode;
-import com.acmes.acmes.mode.bean.DUser;
+import com.acmes.acmes.mode.bean.BUser;
 import com.acmes.acmes.mode.request.LoginRequest;
 import com.acmes.acmes.mode.request.LogoutRequest;
 import com.acmes.acmes.mode.request.RegisterRequest;
@@ -51,7 +51,7 @@ public class LoginMode extends AcmesMode {
     public void onRequestStart(SimpleRequest request) {
         // do it first
         if (request instanceof LogoutRequest) {
-            DUser user = new DUser(((LogoutRequest) request).user_name, ((LogoutRequest) request).user_password);
+            BUser user = new BUser(((LogoutRequest) request).user_name, ((LogoutRequest) request).user_password);
             mAccountManager.removeUser(user);
         }
 
@@ -62,12 +62,12 @@ public class LoginMode extends AcmesMode {
     public void onResponse(SimpleRequest request, SimpleResponse response) {
         // do it first
         if (response.isSuccess() && response.getData() != null) {
-            if (request instanceof LoginRequest && response.getData() instanceof DUser) {
-                DUser user = new DUser(((LoginRequest) request).user_name, ((LoginRequest) request).user_password);
+            if (request instanceof LoginRequest && response.getData() instanceof BUser) {
+                BUser user = new BUser(((LoginRequest) request).user_name, ((LoginRequest) request).user_password);
                 if (!TextUtils.isEmpty(((LoginRequest) request).user_password)) {
                     mAccountManager.addUser(user);
                 }
-            } else if (request instanceof RegisterRequest && response.getData() instanceof DUser) {
+            } else if (request instanceof RegisterRequest && response.getData() instanceof BUser) {
                 //do nothing
             }
         }

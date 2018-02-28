@@ -9,13 +9,17 @@ import com.acmes.simpleandroid.mvc.SimpleActivity;
 import com.acmes.simpleandroid.mvc.model.SimpleRequest;
 import com.acmes.simpleandroid.mvc.model.SimpleResponse;
 
+import butterknife.ButterKnife;
+
 /**
  * Created by fishyu on 2018/1/2.
  */
 
-public abstract class AcmesActivity<T extends AcmesMode> extends SimpleActivity<T> {
+public class AcmesActivity<T extends AcmesMode> extends SimpleActivity<T> {
 
-    private SwipeRefreshLayout mSwipeRefreshLayout = null;
+    static final SwipeRefreshLayout EMPTY = new SwipeRefreshLayout(AcmesApplication.getInstance());
+
+    private SwipeRefreshLayout mSwipeRefreshLayout;
 
     private void initSwipeRefreshLayout() {
         if (mSwipeRefreshLayout == null) {
@@ -24,7 +28,7 @@ public abstract class AcmesActivity<T extends AcmesMode> extends SimpleActivity<
                 mSwipeRefreshLayout = (SwipeRefreshLayout) view;
             } else {
                 Log.e(TAG, "Find no SwipeRefreshLayout !");
-                mSwipeRefreshLayout = null;
+                mSwipeRefreshLayout = EMPTY;
             }
         }
     }
@@ -55,10 +59,16 @@ public abstract class AcmesActivity<T extends AcmesMode> extends SimpleActivity<
     }
 
     @Override
+    protected T createModel() {
+        return (T) new AcmesMode();
+    }
+
+    @Override
     public void onResponse(SimpleRequest request, SimpleResponse response) {
         super.onResponse(request, response);
 
         getSwipeRefreshLayout().setRefreshing(false);
     }
+
 }
 

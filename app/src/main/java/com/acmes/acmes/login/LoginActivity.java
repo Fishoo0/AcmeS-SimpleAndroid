@@ -12,7 +12,7 @@ import android.widget.EditText;
 
 import com.acmes.acmes.AcmesActivity;
 import com.acmes.acmes.R;
-import com.acmes.acmes.mode.bean.DUser;
+import com.acmes.acmes.mode.bean.BUser;
 import com.acmes.acmes.mode.request.LoginRequest;
 import com.acmes.simpleandroid.mvc.model.SimpleRequest;
 import com.acmes.simpleandroid.mvc.model.SimpleResponse;
@@ -43,7 +43,7 @@ public class LoginActivity extends AcmesActivity<LoginMode> implements View.OnCl
 
     public static final String LOGIN_INFO = "user";
 
-    public static final void jumpToThis(Context context, DUser user) {
+    public static final void jumpToThis(Context context, BUser user) {
         Intent intent = new Intent(context, LoginActivity.class);
         if (user != null) {
             intent.putExtra(LOGIN_INFO, user);
@@ -60,7 +60,7 @@ public class LoginActivity extends AcmesActivity<LoginMode> implements View.OnCl
 
 
         if (getIntent().hasExtra(LOGIN_INFO)) {
-            final DUser user = (DUser) getIntent().getSerializableExtra(LOGIN_INFO);
+            final BUser user = (BUser) getIntent().getSerializableExtra(LOGIN_INFO);
             getHandler().postDelayed(new Runnable() {
                 @Override
                 public void run() {

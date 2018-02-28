@@ -1,4 +1,4 @@
-package com.acmes.acmes.main;
+package com.acmes.acmes.videos;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -9,7 +9,8 @@ import android.widget.TextView;
 
 import com.acmes.acmes.AcmesApplication;
 import com.acmes.acmes.R;
-import com.acmes.acmes.mode.bean.DCategories;
+import com.acmes.acmes.mode.bean.BVideo;
+import com.acmes.acmes.mode.request.VideosRequest;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -18,11 +19,11 @@ import butterknife.ButterKnife;
  * Created by fishyu on 2018/2/1.
  */
 
-public class MainActivityAdapter extends RecyclerView.Adapter<MainActivityAdapter.ViewHolder> {
+public class VideoListAdapter extends RecyclerView.Adapter<VideoListAdapter.ViewHolder> {
 
-    public DCategories mData;
+    public VideosRequest.Response mData;
 
-    public void setData(DCategories data) {
+    public void setData(VideosRequest.Response data) {
         mData = data;
     }
 
@@ -54,14 +55,14 @@ public class MainActivityAdapter extends RecyclerView.Adapter<MainActivityAdapte
          *
          * @param data
          */
-        public void updateView(DCategories.DCategory data) {
+        public void updateView(BVideo data) {
 
             AcmesApplication.getPicasso()
-                    .load(data.cover_url)
+                    .load(data.preview_url)
                     .into(mContentImageView);
 
-            mTitle.setText(data.slug);
-            mCount.setText(data.total_videos);
+            mTitle.setText(data.title);
+            mCount.setText(data.likes);
         }
 
     }
@@ -73,11 +74,11 @@ public class MainActivityAdapter extends RecyclerView.Adapter<MainActivityAdapte
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        holder.updateView(mData.getData().get(position));
+        holder.updateView(mData.getData().getList().get(position));
     }
 
     @Override
     public int getItemCount() {
-        return mData == null || mData.getData() == null ? 0 : mData.getData().size();
+        return mData == null || mData.isEmpty() ? 0 : mData.getData().getListSize();
     }
 }

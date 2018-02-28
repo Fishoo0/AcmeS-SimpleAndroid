@@ -14,6 +14,8 @@ import com.acmes.simpleandroid.mvc.model.SimpleModel;
 import com.acmes.simpleandroid.mvc.model.SimpleRequest;
 import com.acmes.simpleandroid.mvc.model.SimpleResponse;
 
+import butterknife.ButterKnife;
+
 /**
  * Created by fishyu on 2017/8/23.
  */
@@ -24,7 +26,7 @@ public abstract class SimpleFragment<T extends SimpleModel> extends Fragment imp
 
     private Handler mHandler = new Handler();
     private T mModel;
-
+    private SimpleViewControllerHelper mViewControllerHelper = new SimpleViewControllerHelper();
 
     @Override
     public void onAttach(Context context) {
@@ -49,36 +51,42 @@ public abstract class SimpleFragment<T extends SimpleModel> extends Fragment imp
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         Log.v(TAG, "onActivityCreated");
+        ButterKnife.bind(this, getView());
     }
 
     @Override
     public void onStart() {
         super.onStart();
         Log.v(TAG, "onStart");
+        mViewControllerHelper.onStart();
     }
 
     @Override
     public void onResume() {
         super.onResume();
         Log.v(TAG, "onResume");
+        mViewControllerHelper.onResume();
     }
 
     @Override
     public void onPause() {
         super.onPause();
         Log.v(TAG, "onPause");
+        mViewControllerHelper.onPause();
     }
 
     @Override
     public void onStop() {
         super.onStop();
         Log.v(TAG, "onStop");
+        mViewControllerHelper.onStop();
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
         Log.v(TAG, "onDestroyView");
+        mViewControllerHelper.onDestroy();
     }
 
     @Override
@@ -131,5 +139,9 @@ public abstract class SimpleFragment<T extends SimpleModel> extends Fragment imp
             }
         }
         return mModel;
+    }
+
+    protected SimpleViewControllerHelper getViewControllerHelper() {
+        return mViewControllerHelper;
     }
 }

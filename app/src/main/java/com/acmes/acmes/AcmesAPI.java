@@ -1,7 +1,11 @@
 package com.acmes.acmes;
 
-import com.acmes.acmes.mode.bean.DCategories;
-import com.acmes.acmes.mode.bean.DUser;
+import com.acmes.acmes.mode.request.CollectionRequest;
+import com.acmes.acmes.mode.request.SearchJavRequest;
+import com.acmes.acmes.mode.request.SearchRequest;
+import com.acmes.acmes.mode.request.VideoRequest;
+import com.acmes.acmes.mode.request.VideosRequest;
+import com.acmes.acmes.mode.bean.BUser;
 import com.acmes.acmes.mode.request.CategoriesRequest;
 import com.acmes.acmes.mode.request.LoginRequest;
 import com.acmes.acmes.mode.request.LogoutRequest;
@@ -21,15 +25,30 @@ public interface AcmesAPI {
     String BASE_URL = "http://45.77.179.207:5000";
 
     @POST("register")
-    Observable<AcmesResponse<DUser>> register(@Body RegisterRequest loginRequest);
+    Observable<AcmesResponse<BUser>> register(@Body RegisterRequest loginRequest);
 
     @POST("login")
-    Observable<AcmesResponse<DUser>> login(@Body LoginRequest loginRequest);
+    Observable<AcmesResponse<BUser>> login(@Body LoginRequest loginRequest);
 
     @POST("logout")
     Observable<AcmesResponse> logout(@Body LogoutRequest request);
 
     @POST("categories")
-    Observable<DCategories> categories(@Body CategoriesRequest request);
+    Observable<CategoriesRequest.Response> categories(@Body CategoriesRequest request);
+
+    @POST("collections")
+    Observable<CollectionRequest.Response> collections(@Body CollectionRequest request);
+
+    @POST("videos")
+    Observable<VideosRequest.Response> videos(@Body VideosRequest request);
+
+    @POST("search")
+    Observable<SearchRequest.Response> search(@Body SearchRequest request);
+
+    @POST("search_jav")
+    Observable<SearchJavRequest.Response> search_jav(@Body SearchJavRequest request);
+
+    @POST("video")
+    Observable<VideoRequest.Response> video(@Body VideoRequest request);
 
 }

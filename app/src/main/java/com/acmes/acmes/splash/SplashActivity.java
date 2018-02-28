@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 import com.acmes.acmes.AcmesActivity;
 import com.acmes.acmes.AcmesApplication;
+import com.acmes.acmes.AcmesMode;
 import com.acmes.acmes.R;
 import com.acmes.acmes.login.AcmesDispatcherActivity;
 import com.acmes.simpleandroid.mvc.model.SimpleModel;
@@ -39,11 +40,6 @@ public class SplashActivity extends AcmesActivity implements AcmesApplication.II
 
         mTextView.setText(String.format(getString(R.string.value_splash_version), Utils.getPackageVersionName()));
         AcmesApplication.getInstance().registerInitializeListener(SplashActivity.this);
-    }
-
-    @Override
-    protected SimpleModel createModel() {
-        return null;
     }
 
     @Override

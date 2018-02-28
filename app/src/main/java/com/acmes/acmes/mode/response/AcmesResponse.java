@@ -25,4 +25,9 @@ public class AcmesResponse<T> extends RetrofitSimpleResponse {
         return data;
     }
 
+
+    public boolean isEmpty() {
+        return getData() == null;
+    }
+
 }

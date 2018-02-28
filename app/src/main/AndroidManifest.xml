@@ -35,6 +35,13 @@
             android:name="com.acmes.acmes.main.MainActivity"
             android:theme="@style/MainActivityTheme" />
         <activity android:name="com.acmes.acmes.login.LogoutActivity" />
+        <activity android:name=".videos.CategoriesActivity" />
+        <activity android:name=".videos.CollectionsActivity" />
+        <activity android:name=".videos.SearchActivity" />
+        <activity android:name=".message.MessageActivity" />
+        <activity android:name=".profile.ProfileActivity" />
+        <activity android:name=".settings.AboutActivity" />
+        <activity android:name=".settings.SettingActivity" />
     </application>
 
 </manifest>

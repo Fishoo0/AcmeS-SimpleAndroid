@@ -69,4 +69,7 @@ dependencies {
 
     compile 'com.squareup.leakcanary:leakcanary-android:1.5.4'
 
+    //views
+    compile 'de.hdodenhof:circleimageview:2.2.0'
+
 }

@@ -4,7 +4,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <include layout="@layout/main_activity_content" />
+    <com.acmes.acmes.main.MainActivityContentView
+        android:id="@+id/main_content_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 
     <com.rom4ek.arcnavigationview.ArcNavigationView
         android:id="@+id/navigation_view"
@@ -16,8 +19,6 @@
         app:arc_cropDirection="cropOutside"
         app:arc_width="40dp"
         app:headerLayout="@layout/drawer_header"
-        app:itemTextColor="@color/textColorPrimary"
-        app:menu="@menu/drawer_menu" />
-
+        app:itemTextColor="@color/textColorPrimary" />
 
 </android.support.v4.widget.DrawerLayout>
